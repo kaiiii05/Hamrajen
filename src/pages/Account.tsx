@@ -4,11 +4,35 @@ import { ShoppingBag, MapPin, Heart, LogOut, ChevronRight, Package, User, Star }
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
 import { Link } from 'react-router-dom';
+import { Order } from '../types';
 
 export default function Account() {
   const { user, login, logout, orders } = useApp();
   const [email, setEmail] = useState('');
   const [activeTab, setActiveTab ] = useState('orders');
+  const [orderSection, setOrderSection] = useState<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>('to-pay');
+
+  const mapOrderToSection = (status: Order['status']) => {
+    if (status === 'confirmed') return 'to-pay';
+    if (status === 'preparing') return 'to-ship';
+    if (status === 'shipped' || status === 'out-for-delivery') return 'to-receive';
+    return 'to-rate';
+  };
+
+  const sectionLabels: Record<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate', string> = {
+    'to-pay': 'To Pay',
+    'to-ship': 'To Ship',
+    'to-receive': 'To Receive',
+    'to-rate': 'To Rate'
+  };
+
+  const filteredOrders = orders.filter((order) => mapOrderToSection(order.status) === orderSection);
+  const orderSectionCounts = {
+    'to-pay': orders.filter((order) => mapOrderToSection(order.status) === 'to-pay').length,
+    'to-ship': orders.filter((order) => mapOrderToSection(order.status) === 'to-ship').length,
+    'to-receive': orders.filter((order) => mapOrderToSection(order.status) === 'to-receive').length,
+    'to-rate': orders.filter((order) => mapOrderToSection(order.status) === 'to-rate').length
+  };
 
   if (!user) {
     return (
@@ -95,7 +119,25 @@ export default function Account() {
           <div className="lg:col-span-9 bg-white border border-brand-gray p-8 md:p-12 shadow-sm min-h-[600px]">
              {activeTab === 'orders' && (
                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <h2 className="text-3xl font-serif mb-10 italic">Order History.</h2>
+                  <h2 className="text-3xl font-serif mb-8 italic">My Orders.</h2>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                    {(Object.keys(sectionLabels) as Array<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>).map((section) => (
+                      <button
+                        key={section}
+                        onClick={() => setOrderSection(section)}
+                        className={cn(
+                          "border px-4 py-3 text-[10px] uppercase font-bold tracking-widest transition-all",
+                          orderSection === section
+                            ? "bg-brand-charcoal text-white border-brand-charcoal"
+                            : "border-brand-gray text-gray-500 hover:border-brand-charcoal hover:text-brand-charcoal"
+                        )}
+                      >
+                        {sectionLabels[section]} ({orderSectionCounts[section]})
+                      </button>
+                    ))}
+                  </div>
+
                   {orders.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
                        <Package size={48} className="text-gray-100 mb-6" />
@@ -104,11 +146,16 @@ export default function Account() {
                     </div>
                   ) : (
                     <div className="space-y-8">
-                       {orders.map((order) => (
+                       {filteredOrders.length === 0 && (
+                         <div className="border border-dashed border-brand-gray p-10 text-center">
+                           <p className="text-gray-500 text-sm">No orders in <span className="font-medium">{sectionLabels[orderSection]}</span> yet.</p>
+                         </div>
+                       )}
+                       {filteredOrders.map((order) => (
                          <div key={order.id} className="border border-brand-gray p-6 hover:shadow-md transition-shadow">
                             <div className="flex justify-between items-start mb-6">
                                <div>
-                                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-gold mb-1">{order.status}</p>
+                                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-gold mb-1">{sectionLabels[mapOrderToSection(order.status)]}</p>
                                   <h4 className="font-serif text-xl">{order.id}</h4>
                                   <p className="text-[10px] text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
                                </div>
