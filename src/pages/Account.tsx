@@ -3,11 +3,13 @@ import { motion } from 'motion/react';
 import { ShoppingBag, MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Order } from '../types';
 
 export default function Account() {
   const { user, login, register, logout, orders } = useApp();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -39,6 +41,7 @@ export default function Account() {
     'to-receive': orders.filter((order) => mapOrderToSection(order.status) === 'to-receive').length,
     'to-rate': orders.filter((order) => mapOrderToSection(order.status) === 'to-rate').length
   };
+  const redirectPath = new URLSearchParams(location.search).get('redirect') || '/account';
 
   if (!user) {
     const handleAuthSubmit = (e: React.FormEvent) => {
@@ -74,7 +77,11 @@ export default function Account() {
       }
 
       const result = login(email, password);
-      if (!result.success) setAuthError(result.message);
+      if (!result.success) {
+        setAuthError(result.message);
+        return;
+      }
+      navigate(redirectPath);
     };
 
     return (

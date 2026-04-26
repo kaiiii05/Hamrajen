@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Filter, ChevronDown, ShoppingBag, Heart, Eye } from 'lucide-react';
 import { PRODUCTS } from '../data/mockData';
@@ -7,7 +7,16 @@ import { useApp } from '../context/AppContext';
 
 export default function Shop() {
   const { category } = useParams();
-  const { addToCart } = useApp();
+  const navigate = useNavigate();
+  const { addToCart, user } = useApp();
+
+  const handleAddToBag = (product: typeof PRODUCTS[number]) => {
+    if (!user) {
+      navigate('/account?redirect=/shop');
+      return;
+    }
+    addToCart(product, product.sizes[0], product.colors[0].name);
+  };
 
   const filteredProducts = category
     ? PRODUCTS.filter(p => p.category === category)
@@ -78,7 +87,7 @@ export default function Shop() {
               </div>
               
               <button
-                onClick={() => addToCart(product, product.sizes[0], product.colors[0].name)}
+                onClick={() => handleAddToBag(product)}
                 className="mt-auto text-[10px] uppercase tracking-[1px] text-brand-gold font-bold hover:text-brand-charcoal transition-colors text-left"
               >
                 + Add to Bag

@@ -9,7 +9,7 @@ import { useApp } from '../context/AppContext';
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useApp();
+  const { addToCart, user } = useApp();
   const product = PRODUCTS.find(p => p.id === id);
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '');
@@ -33,9 +33,22 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = () => {
+    if (!user) {
+      navigate(`/account?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
+      return;
+    }
     addToCart(product, selectedSize, selectedColor);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    if (!user) {
+      navigate(`/account?redirect=${encodeURIComponent(`/product/${product.id}`)}`);
+      return;
+    }
+    handleAddToCart();
+    navigate('/checkout');
   };
 
   return (
@@ -166,7 +179,7 @@ export default function ProductDetail() {
                 <span>{isAdded ? 'Added to Cart' : 'Add to Shopping Bag'}</span>
               </button>
               <button
-                onClick={() => { handleAddToCart(); navigate('/checkout'); }}
+                onClick={handleBuyNow}
                 className="w-full py-5 border border-brand-black text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-black hover:text-white transition-all transform active:scale-95"
               >
                 Buy Now
