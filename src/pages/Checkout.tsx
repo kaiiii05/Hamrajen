@@ -132,7 +132,7 @@ export default function Checkout() {
                    </div>
                    <button
                     type="submit"
-                    className="w-full md:w-auto bg-brand-black text-white px-12 py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all"
+                    className="w-full md:w-auto bg-brand-charcoal text-white px-12 py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all"
                   >
                     Continue to Payment
                   </button>
