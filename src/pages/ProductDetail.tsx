@@ -159,7 +159,7 @@ export default function ProductDetail() {
                 onClick={handleAddToCart}
                 className={cn(
                   "w-full py-5 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 transition-all transform active:scale-95 shadow-xl",
-                  isAdded ? "bg-green-600 text-white" : "bg-brand-black text-white hover:bg-brand-gold"
+                  isAdded ? "bg-green-600 text-white" : "bg-brand-charcoal text-white hover:bg-brand-gold"
                 )}
               >
                 {isAdded ? <Check size={16} /> : <ShoppingBag size={18} />}
