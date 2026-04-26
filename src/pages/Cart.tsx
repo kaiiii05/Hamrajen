@@ -114,7 +114,7 @@ export default function Cart() {
 
               <button
                 onClick={() => navigate('/checkout')}
-                className="w-full bg-brand-black text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 hover:bg-brand-gold transition-all"
+                className="w-full bg-brand-charcoal text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 hover:bg-brand-gold transition-all"
               >
                 <span>Checkout Now</span>
                 <ArrowRight size={16} />
@@ -133,7 +133,7 @@ export default function Cart() {
       <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-brand-gray bg-white p-4 md:hidden shadow-[0_-8px_24px_rgba(0,0,0,0.08)]">
         <button
           onClick={() => navigate('/checkout')}
-          className="w-full bg-brand-black text-white py-4 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 hover:bg-brand-gold transition-all"
+          className="w-full bg-brand-charcoal text-white py-4 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 hover:bg-brand-gold transition-all"
         >
           <span>Checkout Now · {formatPrice(total)}</span>
           <ArrowRight size={16} />
