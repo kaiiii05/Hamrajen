@@ -151,10 +151,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     setUsers((prev) => [newAccount, ...prev]);
-    const sessionUser = { email: newAccount.email, name: newAccount.name };
-    setUser(sessionUser);
-    localStorage.setItem('har_user', JSON.stringify(sessionUser));
-    return { success: true, message: 'Account created successfully.' };
+    return { success: true, message: 'Registered' };
   };
 
   const logout = () => {

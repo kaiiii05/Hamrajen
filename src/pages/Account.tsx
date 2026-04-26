@@ -14,6 +14,7 @@ export default function Account() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
   const [activeTab, setActiveTab ] = useState('orders');
   const [orderSection, setOrderSection] = useState<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>('to-pay');
 
@@ -43,6 +44,7 @@ export default function Account() {
     const handleAuthSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       setAuthError('');
+      setAuthSuccess('');
 
       if (authMode === 'register') {
         if (!name.trim()) {
@@ -59,7 +61,15 @@ export default function Account() {
         }
 
         const result = register(name, email, password);
-        if (!result.success) setAuthError(result.message);
+        if (!result.success) {
+          setAuthError(result.message);
+          return;
+        }
+        setAuthSuccess(result.message);
+        setAuthMode('login');
+        setName('');
+        setPassword('');
+        setConfirmPassword('');
         return;
       }
 
@@ -75,7 +85,7 @@ export default function Account() {
           <div className="grid grid-cols-2 gap-2 mb-8">
             <button
               type="button"
-              onClick={() => { setAuthMode('login'); setAuthError(''); }}
+              onClick={() => { setAuthMode('login'); setAuthError(''); setAuthSuccess(''); }}
               className={cn(
                 "border py-3 text-[10px] uppercase font-bold tracking-widest transition-all",
                 authMode === 'login'
@@ -87,7 +97,7 @@ export default function Account() {
             </button>
             <button
               type="button"
-              onClick={() => { setAuthMode('register'); setAuthError(''); }}
+              onClick={() => { setAuthMode('register'); setAuthError(''); setAuthSuccess(''); }}
               className={cn(
                 "border py-3 text-[10px] uppercase font-bold tracking-widest transition-all",
                 authMode === 'register'
@@ -151,6 +161,9 @@ export default function Account() {
             )}
             {authError && (
               <p className="text-xs text-red-500 font-medium">{authError}</p>
+            )}
+            {authSuccess && (
+              <p className="text-xs text-green-600 font-medium">{authSuccess}</p>
             )}
             <button className="w-full bg-brand-charcoal text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">
               {authMode === 'register' ? 'Create Account' : 'Log In'}
