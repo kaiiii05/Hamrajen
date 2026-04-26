@@ -58,7 +58,7 @@ export default function Checkout() {
             A confirmation email has been sent to {formData.email}. We'll notify you once your premium package is on its way.
           </p>
           <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-            <Link to="/tracking" className="bg-brand-black text-white px-10 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">Track Order</Link>
+            <Link to="/tracking" className="bg-brand-charcoal text-white px-10 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">Track Order</Link>
             <Link to="/" className="border border-brand-black px-10 py-4 uppercase text-[10px] font-bold tracking-[0.2em] hover:bg-brand-black hover:text-white transition-all">Back to Home</Link>
           </div>
         </motion.div>
