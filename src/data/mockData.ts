@@ -18,6 +18,11 @@ import menSageGreen from '../assets/men-polo/sage-green.png';
 import menBlack from '../assets/men-polo/black.png';
 import menDarkGray from '../assets/men-polo/dark-gray.png';
 import menChocoBrown from '../assets/men-polo/choco-brown.png';
+import menTexturedBlack from '../assets/men-textured-tee/black.png';
+import menTexturedBeige from '../assets/men-textured-tee/beige.png';
+import menTexturedKhaki from '../assets/men-textured-tee/khaki.png';
+import menTexturedGray from '../assets/men-textured-tee/gray.png';
+import menTexturedWhite from '../assets/men-textured-tee/white.png';
 
 export const PRODUCTS: Product[] = [
   {
@@ -134,6 +139,41 @@ export const PRODUCTS: Product[] = [
       'Waffle textured knit',
       'Soft and breathable fabric',
       'Classic polo collar',
+      'Comfortable regular fit'
+    ]
+  },
+  {
+    id: 'p9',
+    name: 'Premium Textured Casual Short Sleeve T-Shirt For Men',
+    description: 'A premium short-sleeve textured tee with a clean silhouette and soft handfeel for elevated everyday wear.',
+    price: 1950,
+    category: 'men',
+    images: [
+      menTexturedBlack,
+      menTexturedBeige,
+      menTexturedKhaki,
+      menTexturedGray,
+      menTexturedWhite
+    ],
+    colorImages: {
+      Black: menTexturedBlack,
+      Beige: menTexturedBeige,
+      Khaki: menTexturedKhaki,
+      Gray: menTexturedGray,
+      White: menTexturedWhite
+    },
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Beige', hex: '#E9DFC9' },
+      { name: 'Khaki', hex: '#CBB182' },
+      { name: 'Gray', hex: '#C4C8CC' },
+      { name: 'White', hex: '#FFFFFF' }
+    ],
+    details: [
+      'Premium textured fabric',
+      'Short-sleeve crew neck design',
+      'Breathable and lightweight',
       'Comfortable regular fit'
     ]
   }
