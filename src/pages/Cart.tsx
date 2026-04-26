@@ -32,7 +32,7 @@ export default function Cart() {
 
   return (
     <div className="bg-brand-beige min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 pb-32 md:pb-12">
         <h1 className="text-5xl font-serif mb-12 tracking-tight">Shopping Bag</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -127,6 +127,17 @@ export default function Cart() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mobile sticky checkout CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-brand-gray bg-white p-4 md:hidden shadow-[0_-8px_24px_rgba(0,0,0,0.08)]">
+        <button
+          onClick={() => navigate('/checkout')}
+          className="w-full bg-brand-black text-white py-4 text-[11px] uppercase font-bold tracking-[0.2em] flex items-center justify-center space-x-3 hover:bg-brand-gold transition-all"
+        >
+          <span>Checkout Now · {formatPrice(total)}</span>
+          <ArrowRight size={16} />
+        </button>
       </div>
     </div>
   );
