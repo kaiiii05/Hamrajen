@@ -183,7 +183,7 @@ export default function Checkout() {
                       </button>
                       <button
                         type="submit"
-                        className="flex-[2] bg-brand-black text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all"
+                        className="flex-[2] bg-brand-charcoal text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all"
                       >
                         Complete Purchase
                       </button>
