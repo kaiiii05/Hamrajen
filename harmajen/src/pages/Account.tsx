@@ -1,0 +1,185 @@
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { ShoppingBag, MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
+import { useApp } from '../context/AppContext';
+import { formatPrice, cn } from '../lib/utils';
+import { Link } from 'react-router-dom';
+
+export default function Account() {
+  const { user, login, logout, orders } = useApp();
+  const [email, setEmail] = useState('');
+  const [activeTab, setActiveTab ] = useState('orders');
+
+  if (!user) {
+    return (
+      <div className="bg-brand-beige min-h-[80vh] flex items-center justify-center p-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-12 shadow-2xl border border-brand-gray w-full max-w-md">
+          <h1 className="text-5xl font-serif mb-4 italic text-center tracking-tighter">Welcome back.</h1>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-12 text-center font-bold">Access your Harmajen profile</p>
+          <form
+            onSubmit={(e) => { e.preventDefault(); login(email); }}
+            className="space-y-8"
+          >
+            <div className="flex flex-col space-y-2">
+              <label className="uppercase text-[9px] font-bold tracking-widest text-gray-500">Account Email</label>
+              <input
+                required
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-black font-serif text-lg"
+                placeholder="juan@example.com"
+              />
+            </div>
+            <button className="w-full bg-brand-black text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">
+              Request Authentication
+            </button>
+            <div className="pt-6 text-center border-t border-brand-gray">
+               <p className="text-[10px] text-gray-400 italic">No account? Authenticate to create your prestige profile.</p>
+            </div>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
+
+  const tabs = [
+    { id: 'orders', label: 'Orders', icon: <Package size={18} /> },
+    { id: 'wishlist', label: 'Wishlist', icon: <Heart size={18} /> },
+    { id: 'address', label: 'Addresses', icon: <MapPin size={18} /> },
+    { id: 'settings', label: 'Profile', icon: <User size={18} /> }
+  ];
+
+  return (
+    <div className="bg-brand-beige min-h-screen py-24 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+          <div>
+            <span className="uppercase text-[10px] tracking-[0.4em] font-bold text-brand-gold mb-2 block italic">Member Profile</span>
+            <h1 className="text-7xl font-serif tracking-tighter leading-none">{user.name}</h1>
+            <p className="text-gray-400 text-sm mt-4 font-light">{user.email}</p>
+          </div>
+          <button
+            onClick={logout}
+            className="flex items-center space-x-3 text-[10px] uppercase font-bold tracking-widest text-gray-400 hover:text-red-500 transition-colors"
+          >
+            <LogOut size={16} />
+            <span>Terminate Session</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          {/* Navigation */}
+          <div className="lg:col-span-3">
+             <div className="flex flex-col space-y-2">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      "flex items-center justify-between p-5 text-[11px] uppercase font-bold tracking-widest transition-all",
+                      activeTab === tab.id ? "bg-white border-l-4 border-brand-black shadow-lg" : "text-gray-400 hover:text-brand-black"
+                    )}
+                  >
+                    <div className="flex items-center space-x-4">
+                      {tab.icon}
+                      <span>{tab.label}</span>
+                    </div>
+                    <ChevronRight size={14} />
+                  </button>
+                ))}
+             </div>
+          </div>
+
+          {/* Content */}
+          <div className="lg:col-span-9 bg-white border border-brand-gray p-8 md:p-12 shadow-sm min-h-[600px]">
+             {activeTab === 'orders' && (
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <h2 className="text-3xl font-serif mb-10 italic">Order History.</h2>
+                  {orders.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-20 text-center">
+                       <Package size={48} className="text-gray-100 mb-6" />
+                       <p className="text-gray-400 text-sm italic">You haven't made any curated acquisitions yet.</p>
+                       <Link to="/shop" className="mt-8 border-b border-brand-black pb-1 text-[10px] font-bold uppercase tracking-widest">Explore Shop</Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-8">
+                       {orders.map((order) => (
+                         <div key={order.id} className="border border-brand-gray p-6 hover:shadow-md transition-shadow">
+                            <div className="flex justify-between items-start mb-6">
+                               <div>
+                                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-gold mb-1">{order.status}</p>
+                                  <h4 className="font-serif text-xl">{order.id}</h4>
+                                  <p className="text-[10px] text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
+                               </div>
+                               <div className="text-right">
+                                  <p className="text-lg font-medium">{formatPrice(order.total)}</p>
+                                  <Link to={`/tracking?id=${order.id}`} className="text-[9px] uppercase font-bold tracking-widest border-b border-brand-black hover:text-brand-gold hover:border-brand-gold transition-colors mt-2 inline-block">Track Prestige</Link>
+                               </div>
+                            </div>
+                            <div className="flex -space-x-2 overflow-hidden">
+                               {order.items.slice(0, 4).map((item, idx) => (
+                                 <img
+                                  key={idx}
+                                  src={item.images[0]}
+                                  className="w-10 h-14 object-cover border-2 border-white"
+                                  alt=""
+                                 />
+                               ))}
+                               {order.items.length > 4 && (
+                                 <div className="w-10 h-14 bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] font-bold">
+                                   +{order.items.length - 4}
+                                 </div>
+                               )}
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  )}
+               </motion.div>
+             )}
+
+             {activeTab === 'wishlist' && (
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-32">
+                  <Heart size={48} className="text-gray-100 mx-auto mb-6" />
+                  <p className="text-gray-400 text-sm italic">Your curated wishlist awaits its first addition.</p>
+               </motion.div>
+             )}
+
+             {activeTab === 'address' && (
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <h2 className="text-3xl font-serif mb-10 italic">Saved Addresses.</h2>
+                  <div className="border-2 border-dashed border-brand-gray p-12 text-center hover:border-brand-gold transition-colors cursor-pointer group">
+                     <p className="text-[10px] uppercase font-bold tracking-widest text-gray-400 group-hover:text-brand-black transition-colors">Add New Destination</p>
+                  </div>
+               </motion.div>
+             )}
+
+             {activeTab === 'settings' && (
+               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <h2 className="text-3xl font-serif mb-10 italic">Profile Integrity.</h2>
+                  <div className="space-y-8">
+                     <div className="flex flex-col space-y-2">
+                        <label className="text-[9px] uppercase font-bold tracking-widest text-gray-400">Display Name</label>
+                        <p className="text-xl font-serif italic border-b border-brand-gray pb-4">{user.name}</p>
+                     </div>
+                     <div className="flex flex-col space-y-2">
+                        <label className="text-[9px] uppercase font-bold tracking-widest text-gray-400">Secure Email</label>
+                        <p className="text-xl font-serif italic border-b border-brand-gray pb-4">{user.email}</p>
+                     </div>
+                     <div className="bg-brand-beige p-6 flex items-center space-x-4 border border-brand-gray">
+                        <Star size={24} className="text-brand-gold" />
+                        <div>
+                          <p className="text-[10px] uppercase font-bold tracking-widest">Harmajen Insider Status</p>
+                          <p className="text-xs text-gray-500 font-light italic">Active Member since 2026</p>
+                        </div>
+                     </div>
+                  </div>
+               </motion.div>
+             )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
