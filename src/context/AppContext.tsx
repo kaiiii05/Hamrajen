@@ -12,13 +12,19 @@ interface AppContextType {
   refundRequests: RefundRequest[];
   submitRefund: (refund: Omit<RefundRequest, 'id' | 'createdAt' | 'status'>) => void;
   user: any;
-  login: (email: string) => void;
+  login: (email: string, password: string) => { success: boolean; message: string };
+  register: (name: string, email: string, password: string) => { success: boolean; message: string };
   logout: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [users, setUsers] = useState<Array<{ name: string; email: string; password: string }>>(() => {
+    const saved = localStorage.getItem('har_users');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [cart, setCart] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('har_cart');
     return saved ? JSON.parse(saved) : [];
@@ -50,6 +56,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     localStorage.setItem('har_refunds', JSON.stringify(refundRequests));
   }, [refundRequests]);
+
+  useEffect(() => {
+    localStorage.setItem('har_users', JSON.stringify(users));
+  }, [users]);
 
   const addToCart = (product: Product, size: string, color: string) => {
     setCart((prev) => {
@@ -109,10 +119,42 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRefundRequests((prev) => [newRefund, ...prev]);
   };
 
-  const login = (email: string) => {
-    const newUser = { email, name: email.split('@')[0] };
-    setUser(newUser);
-    localStorage.setItem('har_user', JSON.stringify(newUser));
+  const login = (email: string, password: string) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = users.find((item) => item.email.toLowerCase() === normalizedEmail);
+
+    if (!existingUser) {
+      return { success: false, message: 'No account found with that email.' };
+    }
+
+    if (existingUser.password !== password) {
+      return { success: false, message: 'Incorrect password.' };
+    }
+
+    const sessionUser = { email: existingUser.email, name: existingUser.name };
+    setUser(sessionUser);
+    localStorage.setItem('har_user', JSON.stringify(sessionUser));
+    return { success: true, message: 'Login successful.' };
+  };
+
+  const register = (name: string, email: string, password: string) => {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (users.some((item) => item.email.toLowerCase() === normalizedEmail)) {
+      return { success: false, message: 'Email is already registered.' };
+    }
+
+    const newAccount = {
+      name: name.trim(),
+      email: normalizedEmail,
+      password
+    };
+
+    setUsers((prev) => [newAccount, ...prev]);
+    const sessionUser = { email: newAccount.email, name: newAccount.name };
+    setUser(sessionUser);
+    localStorage.setItem('har_user', JSON.stringify(sessionUser));
+    return { success: true, message: 'Account created successfully.' };
   };
 
   const logout = () => {
@@ -125,7 +167,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       cart, addToCart, removeFromCart, updateQuantity, clearCart,
       orders, createOrder,
       refundRequests, submitRefund,
-      user, login, logout
+      user, login, register, logout
     }}>
       {children}
     </AppContext.Provider>

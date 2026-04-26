@@ -7,8 +7,13 @@ import { Link } from 'react-router-dom';
 import { Order } from '../types';
 
 export default function Account() {
-  const { user, login, logout, orders } = useApp();
+  const { user, login, register, logout, orders } = useApp();
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+  const [authError, setAuthError] = useState('');
   const [activeTab, setActiveTab ] = useState('orders');
   const [orderSection, setOrderSection] = useState<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>('to-pay');
 
@@ -35,15 +40,80 @@ export default function Account() {
   };
 
   if (!user) {
+    const handleAuthSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      setAuthError('');
+
+      if (authMode === 'register') {
+        if (!name.trim()) {
+          setAuthError('Please enter your name.');
+          return;
+        }
+        if (password.length < 6) {
+          setAuthError('Password must be at least 6 characters.');
+          return;
+        }
+        if (password !== confirmPassword) {
+          setAuthError('Passwords do not match.');
+          return;
+        }
+
+        const result = register(name, email, password);
+        if (!result.success) setAuthError(result.message);
+        return;
+      }
+
+      const result = login(email, password);
+      if (!result.success) setAuthError(result.message);
+    };
+
     return (
       <div className="bg-brand-beige min-h-[80vh] flex items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-12 shadow-2xl border border-brand-gray w-full max-w-md">
           <h1 className="text-5xl font-serif mb-4 italic text-center tracking-tighter">Welcome back.</h1>
-          <p className="text-gray-400 text-xs uppercase tracking-widest mb-12 text-center font-bold">Access your Harmajen profile</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-8 text-center font-bold">Access your Harmajen profile</p>
+          <div className="grid grid-cols-2 gap-2 mb-8">
+            <button
+              type="button"
+              onClick={() => { setAuthMode('login'); setAuthError(''); }}
+              className={cn(
+                "border py-3 text-[10px] uppercase font-bold tracking-widest transition-all",
+                authMode === 'login'
+                  ? "bg-brand-charcoal text-white border-brand-charcoal"
+                  : "border-brand-gray text-gray-500 hover:border-brand-charcoal hover:text-brand-charcoal"
+              )}
+            >
+              Log In
+            </button>
+            <button
+              type="button"
+              onClick={() => { setAuthMode('register'); setAuthError(''); }}
+              className={cn(
+                "border py-3 text-[10px] uppercase font-bold tracking-widest transition-all",
+                authMode === 'register'
+                  ? "bg-brand-charcoal text-white border-brand-charcoal"
+                  : "border-brand-gray text-gray-500 hover:border-brand-charcoal hover:text-brand-charcoal"
+              )}
+            >
+              Register
+            </button>
+          </div>
           <form
-            onSubmit={(e) => { e.preventDefault(); login(email); }}
+            onSubmit={handleAuthSubmit}
             className="space-y-8"
           >
+            {authMode === 'register' && (
+              <div className="flex flex-col space-y-2">
+                <label className="uppercase text-[9px] font-bold tracking-widest text-gray-500">Full Name</label>
+                <input
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
+                  placeholder="Juan Dela Cruz"
+                />
+              </div>
+            )}
             <div className="flex flex-col space-y-2">
               <label className="uppercase text-[9px] font-bold tracking-widest text-gray-500">Account Email</label>
               <input
@@ -51,15 +121,46 @@ export default function Account() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-black font-serif text-lg"
+                className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
                 placeholder="juan@example.com"
               />
             </div>
-            <button className="w-full bg-brand-black text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">
-              Request Authentication
+            <div className="flex flex-col space-y-2">
+              <label className="uppercase text-[9px] font-bold tracking-widest text-gray-500">Password</label>
+              <input
+                required
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
+                placeholder="Enter password"
+              />
+            </div>
+            {authMode === 'register' && (
+              <div className="flex flex-col space-y-2">
+                <label className="uppercase text-[9px] font-bold tracking-widest text-gray-500">Confirm Password</label>
+                <input
+                  required
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
+                  placeholder="Re-enter password"
+                />
+              </div>
+            )}
+            {authError && (
+              <p className="text-xs text-red-500 font-medium">{authError}</p>
+            )}
+            <button className="w-full bg-brand-charcoal text-white py-5 text-[11px] uppercase font-bold tracking-[0.2em] hover:bg-brand-gold transition-all">
+              {authMode === 'register' ? 'Create Account' : 'Log In'}
             </button>
             <div className="pt-6 text-center border-t border-brand-gray">
-               <p className="text-[10px] text-gray-400 italic">No account? Authenticate to create your prestige profile.</p>
+               <p className="text-[10px] text-gray-400 italic">
+                 {authMode === 'register'
+                   ? 'Already have an account? Switch to Log In.'
+                   : "No account yet? Switch to Register to create one."}
+               </p>
             </div>
           </form>
         </motion.div>
