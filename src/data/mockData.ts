@@ -1,4 +1,11 @@
 import { Product } from '../types';
+import womenWhite from '../assets/women/white.png';
+import womenApricot from '../assets/women/apricot.png';
+import womenDarkGreen from '../assets/women/dark-green.png';
+import womenKhaki from '../assets/women/khaki.png';
+import womenBlack from '../assets/women/black.png';
+import womenBrown from '../assets/women/brown.png';
+import womenBlue from '../assets/women/blue.png';
 
 export const PRODUCTS: Product[] = [
   {
@@ -25,24 +32,43 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'p2',
-    name: 'Silk Blend Slip Dress',
-    description: 'An elegant silk-blend slip dress featuring a delicate neckline and adjustable straps. A versatile piece that transitions from day to night.',
-    price: 4200,
+    name: 'Relaxed Camp Collar Blouse',
+    description: 'A clean short-sleeve blouse with a relaxed drape and open camp collar. Built for breathable everyday wear with a polished silhouette.',
+    price: 2200,
     category: 'women',
     images: [
-      'https://picsum.photos/seed/har2/800/1200',
-      'https://picsum.photos/seed/har2b/800/1200'
+      womenWhite,
+      womenApricot,
+      womenDarkGreen,
+      womenKhaki,
+      womenBlack,
+      womenBrown,
+      womenBlue
     ],
+    colorImages: {
+      White: womenWhite,
+      Apricot: womenApricot,
+      'Dark Green': womenDarkGreen,
+      Khaki: womenKhaki,
+      Black: womenBlack,
+      Brown: womenBrown,
+      Blue: womenBlue
+    },
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Champagne', hex: '#F7E7CE' },
-      { name: 'Black', hex: '#000000' }
+      { name: 'White', hex: '#FFFFFF' },
+      { name: 'Apricot', hex: '#E6D5C3' },
+      { name: 'Dark Green', hex: '#6E786B' },
+      { name: 'Khaki', hex: '#C4B7A6' },
+      { name: 'Black', hex: '#000000' },
+      { name: 'Brown', hex: '#8A5F56' },
+      { name: 'Blue', hex: '#A8BCE2' }
     ],
     details: [
-      '95% Silk, 5% Elastane',
-      'Adjustable straps',
-      'Bias cut for a flattering fit',
-      'Dry clean only'
+      'Soft woven lightweight fabric',
+      'Camp collar neckline',
+      'Front button closure',
+      'Relaxed everyday fit'
     ]
   },
   {

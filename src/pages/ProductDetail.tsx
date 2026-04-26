@@ -22,6 +22,16 @@ export default function ProductDetail() {
     return <div className="py-32 text-center">Product not found.</div>;
   }
 
+  const handleColorSelect = (colorName: string) => {
+    setSelectedColor(colorName);
+    const colorImage = product.colorImages?.[colorName];
+    if (!colorImage) return;
+    const imageIndex = product.images.indexOf(colorImage);
+    if (imageIndex >= 0) {
+      setActiveImage(imageIndex);
+    }
+  };
+
   const handleAddToCart = () => {
     addToCart(product, selectedSize, selectedColor);
     setIsAdded(true);
@@ -93,7 +103,7 @@ export default function ProductDetail() {
                   {product.colors.map(color => (
                     <button
                       key={color.name}
-                      onClick={() => setSelectedColor(color.name)}
+                      onClick={() => handleColorSelect(color.name)}
                       className={cn(
                         "w-8 h-8 rounded-full border-2 transition-all p-1 flex items-center justify-center",
                         selectedColor === color.name ? "border-brand-black" : "border-transparent"
