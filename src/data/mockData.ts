@@ -12,6 +12,12 @@ import peplumMauve from '../assets/women-peplum/mauve.png';
 import peplumOldrose from '../assets/women-peplum/oldrose.png';
 import peplumAvocadoGreen from '../assets/women-peplum/avocado-green.png';
 import peplumRed from '../assets/women-peplum/red.png';
+import menAshGray from '../assets/men-polo/ash-gray.png';
+import menWhite from '../assets/men-polo/white.png';
+import menSageGreen from '../assets/men-polo/sage-green.png';
+import menBlack from '../assets/men-polo/black.png';
+import menDarkGray from '../assets/men-polo/dark-gray.png';
+import menChocoBrown from '../assets/men-polo/choco-brown.png';
 
 export const PRODUCTS: Product[] = [
   {
@@ -91,6 +97,44 @@ export const PRODUCTS: Product[] = [
       'Open-back tie detail',
       'Structured seam construction',
       'Lightweight comfortable fabric'
+    ]
+  },
+  {
+    id: 'p8',
+    name: 'Polo T-Shirt Waffle Fabric Comfortable Suit',
+    description: 'A textured waffle-knit polo t-shirt with a clean modern cut and breathable comfort for daily wear.',
+    price: 2100,
+    category: 'men',
+    images: [
+      menAshGray,
+      menWhite,
+      menSageGreen,
+      menBlack,
+      menDarkGray,
+      menChocoBrown
+    ],
+    colorImages: {
+      'Ash Gray': menAshGray,
+      White: menWhite,
+      'Sage Green': menSageGreen,
+      Black: menBlack,
+      'Dark Gray': menDarkGray,
+      'Choco Brown': menChocoBrown
+    },
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Ash Gray', hex: '#CFD3D3' },
+      { name: 'White', hex: '#FFFFFF' },
+      { name: 'Sage Green', hex: '#A9BE9E' },
+      { name: 'Black', hex: '#000000' },
+      { name: 'Dark Gray', hex: '#5B5B5D' },
+      { name: 'Choco Brown', hex: '#5B331A' }
+    ],
+    details: [
+      'Waffle textured knit',
+      'Soft and breathable fabric',
+      'Classic polo collar',
+      'Comfortable regular fit'
     ]
   }
 ];
