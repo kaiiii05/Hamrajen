@@ -43,6 +43,18 @@ export default function Account() {
   };
   const redirectPath = new URLSearchParams(location.search).get('redirect') || '/account';
 
+  const handleSwitchAccount = () => {
+    logout();
+    setAuthMode('login');
+    setAuthError('');
+    setAuthSuccess('');
+    setEmail('');
+    setPassword('');
+    setName('');
+    setConfirmPassword('');
+    navigate('/account');
+  };
+
   if (!user) {
     const handleAuthSubmit = (e: React.FormEvent) => {
       e.preventDefault();
@@ -204,13 +216,22 @@ export default function Account() {
             <h1 className="text-7xl font-serif tracking-tighter leading-none">{user.name}</h1>
             <p className="text-gray-400 text-sm mt-4 font-light">{user.email}</p>
           </div>
-          <button
-            onClick={logout}
-            className="flex items-center space-x-3 text-[10px] uppercase font-bold tracking-widest text-gray-400 hover:text-red-500 transition-colors"
-          >
-            <LogOut size={16} />
-            <span>Terminate Session</span>
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={logout}
+              className="flex items-center space-x-2 text-[10px] uppercase font-bold tracking-widest text-gray-400 hover:text-red-500 transition-colors border border-brand-gray px-4 py-2"
+            >
+              <LogOut size={14} />
+              <span>Log Out</span>
+            </button>
+            <button
+              onClick={handleSwitchAccount}
+              className="flex items-center space-x-2 text-[10px] uppercase font-bold tracking-widest text-gray-500 hover:text-brand-charcoal transition-colors border border-brand-gray px-4 py-2"
+            >
+              <User size={14} />
+              <span>Switch Account</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
