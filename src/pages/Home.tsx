@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { PRODUCTS } from '../data/mockData';
+import { formatPrice } from '../lib/utils';
 
 export default function Home() {
+  const menProduct = PRODUCTS.find((p) => p.category === 'men');
+  const womenProduct = PRODUCTS.find((p) => p.category === 'women');
+  const newArrivalsProduct = PRODUCTS[0];
+  const heroProduct = womenProduct || menProduct || PRODUCTS[0];
+  const featuredProducts = PRODUCTS.slice(0, 4);
+
   const collections = [
-    { title: 'Men', path: '/shop/men', image: 'https://picsum.photos/seed/harman/800/1000' },
-    { title: 'Women', path: '/shop/women', image: 'https://picsum.photos/seed/harwoman/800/1000' },
-    { title: 'New Arrivals', path: '/shop/new-arrivals', image: 'https://picsum.photos/seed/harnew/800/1000' },
+    { title: 'Men', path: '/shop/men', image: menProduct?.images[0] || heroProduct?.images[0] },
+    { title: 'Women', path: '/shop/women', image: womenProduct?.images[0] || heroProduct?.images[0] },
+    { title: 'New Arrivals', path: '/shop', image: newArrivalsProduct?.images[0] || heroProduct?.images[0] },
   ];
 
   return (
@@ -21,13 +29,16 @@ export default function Home() {
           >
             <p className="text-[10px] uppercase tracking-[3px] text-gray-400 mb-4 font-medium">Summer / Autumn 2026</p>
             <h1 className="text-[48px] font-serif leading-[1.1] mb-8 font-normal tracking-tight">
-              Wear Confidence.<br />Wear Harmajen.
+              Everyday Essentials,<br />Elevated.
             </h1>
+            <p className="text-sm text-gray-500 mb-8 max-w-md font-light leading-relaxed">
+              Premium basics in wearable colors for men and women.
+            </p>
             <Link
               to="/shop"
               className="inline-block px-10 py-4 bg-brand-charcoal text-white text-[11px] uppercase tracking-[2px] hover:bg-transparent hover:text-brand-charcoal border border-brand-charcoal transition-all"
             >
-              Explore Collection
+              Shop Now
             </Link>
           </motion.div>
         </div>
@@ -37,8 +48,8 @@ export default function Home() {
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5 }}
-            src="https://picsum.photos/seed/harhero/1200/800"
-            alt="Hero Collection"
+            src={heroProduct?.images[0]}
+            alt={heroProduct?.name || 'Featured Product'}
             className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />
@@ -46,7 +57,7 @@ export default function Home() {
             <div className="w-[80%] h-[80%] border border-white/30" />
           </div>
           <div className="absolute bottom-10 left-10 text-white drop-shadow-md">
-            <p className="text-[12px] tracking-[2px] uppercase font-medium">Premium Streetwear</p>
+            <p className="text-[12px] tracking-[2px] uppercase font-medium">{heroProduct?.name || 'Premium Essentials'}</p>
           </div>
         </div>
       </section>
@@ -88,6 +99,45 @@ export default function Home() {
               <span className="text-[12px] text-gray-500 font-light italic">Fall 2026</span>
             </div>
          </div>
+      </section>
+
+      <section className="bg-white border-b border-brand-gray-med px-10 py-16">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <p className="text-[10px] uppercase tracking-[3px] text-gray-400 mb-2 font-medium">Featured</p>
+            <h2 className="text-4xl font-serif tracking-tight">Shop Best Picks</h2>
+          </div>
+          <Link to="/shop" className="text-[10px] uppercase font-bold tracking-[2px] text-brand-gold border-b border-brand-gold pb-1">
+            View All
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredProducts.map((product) => (
+            <Link key={product.id} to={`/product/${product.id}`} className="group border border-brand-gray-light bg-brand-beige/30 p-4">
+              <div className="aspect-[3/4] overflow-hidden bg-white mb-4">
+                <img
+                  src={product.images[0]}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="text-sm font-medium mb-2 line-clamp-2">{product.name}</h3>
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">{formatPrice(product.price)}</p>
+                <div className="flex items-center space-x-1">
+                  {product.colors.slice(0, 4).map((color) => (
+                    <span
+                      key={`${product.id}-${color.name}`}
+                      className="w-2.5 h-2.5 rounded-full border border-black/10"
+                      style={{ backgroundColor: color.hex }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* Brand Statement - Minimalist Style */}
