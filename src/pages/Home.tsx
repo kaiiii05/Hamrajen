@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { PRODUCTS } from '../data/mockData';
 
 export default function Home() {
+  const menHero = PRODUCTS.find((p) => p.category === 'men')?.images[0] ?? '';
+  const womenHero = PRODUCTS.find((p) => p.category === 'women')?.images[0] ?? '';
+  const latestProduct = PRODUCTS[PRODUCTS.length - 1]?.images[0] ?? '';
+
   const collections = [
-    { title: 'Men', path: '/shop/men', image: 'https://picsum.photos/seed/harman/800/1000' },
-    { title: 'Women', path: '/shop/women', image: 'https://picsum.photos/seed/harwoman/800/1000' },
-    { title: 'New Arrivals', path: '/shop/new-arrivals', image: 'https://picsum.photos/seed/harnew/800/1000' },
+    { title: 'Men', path: '/shop/men', image: menHero },
+    { title: 'Women', path: '/shop/women', image: womenHero || menHero },
+    { title: 'New Arrivals', path: '/shop/men', image: latestProduct || menHero },
   ];
 
   return (
@@ -21,13 +26,16 @@ export default function Home() {
           >
             <p className="text-[10px] uppercase tracking-[3px] text-gray-400 mb-4 font-medium">Summer / Autumn 2026</p>
             <h1 className="text-[48px] font-serif leading-[1.1] mb-8 font-normal tracking-tight">
-              Wear Confidence.<br />Wear Harmajen.
+              Everyday Essentials,<br />Elevated.
             </h1>
+            <p className="text-sm text-gray-500 max-w-md mb-8 font-light leading-relaxed">
+              Premium basics in wearable colors for men and women.
+            </p>
             <Link
               to="/shop"
               className="inline-block px-10 py-4 bg-brand-charcoal text-white text-[11px] uppercase tracking-[2px] hover:bg-transparent hover:text-brand-charcoal border border-brand-charcoal transition-all"
             >
-              Explore Collection
+              Shop Now
             </Link>
           </motion.div>
         </div>
@@ -37,16 +45,16 @@ export default function Home() {
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5 }}
-            src="https://picsum.photos/seed/harhero/1200/800"
-            alt="Hero Collection"
-            className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105"
+            src={womenHero || menHero}
+            alt="Featured Product"
+            className="w-full h-full object-cover opacity-95 transition-transform duration-1000 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-[80%] h-[80%] border border-white/30" />
           </div>
           <div className="absolute bottom-10 left-10 text-white drop-shadow-md">
-            <p className="text-[12px] tracking-[2px] uppercase font-medium">Premium Streetwear</p>
+            <p className="text-[12px] tracking-[2px] uppercase font-medium">Real Product Photos</p>
           </div>
         </div>
       </section>
@@ -80,12 +88,19 @@ export default function Home() {
         ))}
          {/* Extra block for balance */}
          <div className="hidden md:flex flex-col border-none p-8 group hover:bg-brand-beige transition-colors h-[300px]">
-            <div className="h-40 bg-[#F9F9F9] mb-6 flex items-center justify-center border border-dashed border-gray-200">
-               <span className="text-[10px] uppercase tracking-widest text-gray-300">Next drop soon</span>
+            <div className="h-40 bg-[#F9F9F9] mb-6 flex items-center justify-center border border-brand-gray-light relative overflow-hidden">
+               <img
+                src={menHero}
+                alt="Featured item"
+                className="w-full h-full object-cover opacity-90 transition-opacity duration-700"
+               />
             </div>
             <div className="flex flex-col">
-              <span className="text-[13px] font-medium mb-1">Coming Soon</span>
-              <span className="text-[12px] text-gray-500 font-light italic">Fall 2026</span>
+              <span className="text-[13px] font-medium mb-1">Featured Item</span>
+              <span className="text-[12px] text-gray-500 font-light italic">From current catalog</span>
+            </div>
+            <div className="mt-auto text-[10px] uppercase tracking-[1px] text-brand-gold font-bold">
+              + Shop Men
             </div>
          </div>
       </section>
