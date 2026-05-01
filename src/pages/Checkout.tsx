@@ -92,7 +92,7 @@ export default function Checkout() {
                           value={formData.fullName}
                           onChange={handleInputChange}
                           className="bg-transparent border-b border-brand-gray py-3 outline-none focus:border-brand-black transition-colors font-light"
-                          placeholder="Juan Dela Cruz"
+                          placeholder="Enter Full Name"
                         />
                      </div>
                      <div className="flex flex-col space-y-2">

@@ -138,7 +138,7 @@ export default function Account() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
-                  placeholder="Juan Dela Cruz"
+                  placeholder="Enter Full Name"
                 />
               </div>
             )}
