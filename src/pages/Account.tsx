@@ -100,7 +100,6 @@ export default function Account() {
       <div className="bg-brand-beige min-h-[80vh] flex items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white p-12 shadow-2xl border border-brand-gray w-full max-w-md">
           <h1 className="text-5xl font-serif mb-4 italic text-center tracking-tighter">Welcome back.</h1>
-          <p className="text-gray-400 text-xs uppercase tracking-widest mb-8 text-center font-bold">Access your Harmajen profile</p>
           <div className="grid grid-cols-2 gap-2 mb-8">
             <button
               type="button"
