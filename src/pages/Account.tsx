@@ -151,7 +151,7 @@ export default function Account() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-transparent border-b border-brand-gray py-4 outline-none focus:border-brand-charcoal font-serif text-lg"
-                placeholder="juan@example.com"
+                placeholder="Enter Email"
               />
             </div>
             <div className="flex flex-col space-y-2">

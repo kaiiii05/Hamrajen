@@ -104,7 +104,7 @@ export default function Checkout() {
                           value={formData.email}
                           onChange={handleInputChange}
                           className="bg-transparent border-b border-brand-gray py-3 outline-none focus:border-brand-black transition-colors font-light"
-                          placeholder="juan@example.com"
+                          placeholder="Enter Email"
                         />
                      </div>
                      <div className="flex flex-col space-y-2">
