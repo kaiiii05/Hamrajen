@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CheckCircle2, ChevronRight, CreditCard, Wallet, Banknote } from 'lucide-react';
+import { CheckCircle2, ChevronRight, CreditCard, Wallet } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
 
@@ -143,8 +143,7 @@ export default function Checkout() {
                     <div className="grid grid-cols-1 gap-6">
                       {[
                         { id: 'GCash', name: 'GCash', icon: <Wallet size={24} /> },
-                        { id: 'Credit Card', name: 'Credit / Debit Card', icon: <CreditCard size={24} /> },
-                        { id: 'COD', name: 'Cash On Delivery', icon: <Banknote size={24} /> }
+                        { id: 'Credit Card', name: 'Credit / Debit Card', icon: <CreditCard size={24} /> }
                       ].map((method) => (
                         <div
                           key={method.id}
