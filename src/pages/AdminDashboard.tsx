@@ -11,7 +11,7 @@ export default function AdminDashboard() {
 
   const stats = [
     { label: 'Total Revenue', value: formatPrice(orders.reduce((sum, o) => sum + o.total, 0)), icon: <TrendingUp size={20} className="text-green-500" /> },
-    { label: 'Active Orders', value: orders.filter(o => o.status !== 'delivered').length, icon: <ShoppingBag size={20} className="text-blue-500" /> },
+    { label: 'Active Orders', value: orders.filter(o => o.status !== 'delivered' && o.status !== 'cancelled').length, icon: <ShoppingBag size={20} className="text-blue-500" /> },
     { label: 'Refund Requests', value: refundRequests.length, icon: <AlertCircle size={20} className={refundRequests.length > 0 ? "text-red-500" : "text-gray-300"} /> },
     { label: 'Verified Customers', value: '1,248', icon: <Users size={20} className="text-brand-gold" /> }
   ];

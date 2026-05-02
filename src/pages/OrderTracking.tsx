@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Package, MapPin, Truck, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useApp } from '../context/AppContext';
@@ -7,8 +7,17 @@ import { cn } from '../lib/utils';
 
 export default function OrderTracking() {
   const { orders } = useApp();
+  const [searchParams] = useSearchParams();
   const [orderId, setOrderId] = useState('');
   const [activeOrder, setActiveOrder] = useState<any>(null);
+
+  useEffect(() => {
+    const id = searchParams.get('id');
+    if (!id) return;
+    setOrderId(id);
+    const found = orders.find((o) => o.id.toLowerCase() === id.toLowerCase());
+    setActiveOrder(found || { id, notFound: true });
+  }, [searchParams, orders]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +35,81 @@ export default function OrderTracking() {
 
   const getCurrentStepIndex = (status: string) => {
     return steps.findIndex(s => s.status === status);
+  };
+
+  const renderTrackingBody = (order: { id: string; status?: string; customer?: { address?: string } }) => {
+    if (order.status === 'cancelled') {
+      return (
+        <div className="p-8 md:p-12 text-center">
+          <p className="text-[10px] uppercase font-bold tracking-widest text-red-500 mb-4">Cancelled</p>
+          <p className="text-gray-600 font-light">This order was cancelled and is no longer in transit.</p>
+        </div>
+      );
+    }
+
+    const stepIndex = getCurrentStepIndex(order.status || '');
+    const progressPct =
+      stepIndex >= 0 ? (stepIndex / (steps.length - 1)) * 100 : 0;
+
+    return (
+      <div className="p-8 md:p-12">
+        <div className="relative mb-20">
+          <div className="absolute top-1/2 left-0 h-0.5 bg-brand-gray w-full -translate-y-1/2" />
+          <div
+            className="absolute top-1/2 left-0 h-0.5 bg-brand-gold transition-all duration-1000 -translate-y-1/2"
+            style={{ width: `${progressPct}%` }}
+          />
+
+          <div className="relative flex justify-between">
+            {steps.map((step, idx) => {
+              const isActive = stepIndex >= idx;
+              return (
+                <div key={idx} className="flex flex-col items-center">
+                  <div
+                    className={cn(
+                      'w-4 h-4 rounded-full border-2 transition-all duration-500 bg-white z-10',
+                      isActive ? 'border-brand-gold bg-brand-gold scale-125' : 'border-brand-gray'
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      'absolute top-8 text-[8px] uppercase font-bold tracking-widest text-center whitespace-nowrap',
+                      isActive ? 'text-brand-black' : 'text-gray-300'
+                    )}
+                  >
+                    {step.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 pt-12 border-t border-brand-gray">
+          <div className="flex space-x-6">
+            <div className="p-4 bg-brand-beige border border-brand-gray h-fit">
+              <MapPin size={24} className="text-brand-gold" />
+            </div>
+            <div>
+              <p className="uppercase text-[9px] font-bold tracking-[0.3em] text-gray-400 mb-2">Delivery Address</p>
+              <p className="text-sm font-light text-gray-600 leading-relaxed italic">
+                {order.customer?.address || 'Premium Customer, Metro Manila'}
+              </p>
+            </div>
+          </div>
+          <div className="flex space-x-6">
+            <div className="p-4 bg-brand-beige border border-brand-gray h-fit">
+              <Truck size={24} className="text-brand-gold" />
+            </div>
+            <div>
+              <p className="uppercase text-[9px] font-bold tracking-[0.3em] text-gray-400 mb-2">Carrier Information</p>
+              <p className="text-sm font-light text-gray-600">Harmajen Luxury Logistics</p>
+              <p className="text-[10px] text-gray-400 mt-1">Vehicle: BLACK-OPS-01</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -78,58 +162,13 @@ export default function OrderTracking() {
                 </div>
                 <div className="text-right">
                   <p className="uppercase text-[9px] font-bold tracking-[0.3em] opacity-50 mb-1">Expected Arrival</p>
-                  <p className="text-brand-gold font-medium">May 02, 2026</p>
+                  <p className="text-brand-gold font-medium">
+                    {activeOrder.status === 'cancelled' ? '—' : 'May 02, 2026'}
+                  </p>
                 </div>
               </div>
 
-              <div className="p-8 md:p-12">
-                <div className="relative mb-20">
-                   {/* Progress Line */}
-                   <div className="absolute top-1/2 left-0 h-0.5 bg-brand-gray w-full -translate-y-1/2" />
-                   <div
-                    className="absolute top-1/2 left-0 h-0.5 bg-brand-gold transition-all duration-1000 -translate-y-1/2"
-                    style={{ width: `${(getCurrentStepIndex(activeOrder.status) / (steps.length - 1)) * 100}%` }}
-                   />
-
-                   <div className="relative flex justify-between">
-                     {steps.map((step, idx) => {
-                       const isActive = getCurrentStepIndex(activeOrder.status) >= idx;
-                       return (
-                         <div key={idx} className="flex flex-col items-center">
-                           <div className={cn(
-                             "w-4 h-4 rounded-full border-2 transition-all duration-500 bg-white z-10",
-                             isActive ? "border-brand-gold bg-brand-gold scale-125" : "border-brand-gray"
-                           )} />
-                           <span className={cn(
-                             "absolute top-8 text-[8px] uppercase font-bold tracking-widest text-center whitespace-nowrap",
-                             isActive ? "text-brand-black" : "text-gray-300"
-                           )}>
-                             {step.label}
-                           </span>
-                         </div>
-                       );
-                     })}
-                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 pt-12 border-t border-brand-gray">
-                   <div className="flex space-x-6">
-                      <div className="p-4 bg-brand-beige border border-brand-gray h-fit"><MapPin size={24} className="text-brand-gold" /></div>
-                      <div>
-                        <p className="uppercase text-[9px] font-bold tracking-[0.3em] text-gray-400 mb-2">Delivery Address</p>
-                        <p className="text-sm font-light text-gray-600 leading-relaxed italic">{activeOrder.customer?.address || 'Premium Customer, Metro Manila'}</p>
-                      </div>
-                   </div>
-                   <div className="flex space-x-6">
-                      <div className="p-4 bg-brand-beige border border-brand-gray h-fit"><Truck size={24} className="text-brand-gold" /></div>
-                      <div>
-                        <p className="uppercase text-[9px] font-bold tracking-[0.3em] text-gray-400 mb-2">Carrier Information</p>
-                        <p className="text-sm font-light text-gray-600">Harmajen Luxury Logistics</p>
-                        <p className="text-[10px] text-gray-400 mt-1">Vehicle: BLACK-OPS-01</p>
-                      </div>
-                   </div>
-                </div>
-              </div>
+              {renderTrackingBody(activeOrder)}
 
               <div className="bg-brand-gray p-6 flex justify-between items-center px-12">
                  <Link to="/contact" className="text-[10px] uppercase font-bold tracking-widest hover:text-brand-gold transition-colors flex items-center space-x-2">

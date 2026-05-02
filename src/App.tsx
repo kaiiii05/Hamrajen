@@ -13,6 +13,7 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Account from './pages/Account';
+import OrderDetail from './pages/OrderDetail';
 import AdminDashboard from './pages/AdminDashboard';
 import OrderTracking from './pages/OrderTracking';
 import ReturnRefund from './pages/ReturnRefund';
@@ -34,6 +35,7 @@ export default function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/account/orders/:orderId" element={<OrderDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/tracking" element={<OrderTracking />} />
               <Route path="/return-refund" element={<ReturnRefund />} />

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ShoppingBag, MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
+import { MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -18,20 +18,27 @@ export default function Account() {
   const [authError, setAuthError] = useState('');
   const [authSuccess, setAuthSuccess] = useState('');
   const [activeTab, setActiveTab ] = useState('orders');
-  const [orderSection, setOrderSection] = useState<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>('to-pay');
+  const [orderSection, setOrderSection] = useState<
+    'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled'
+  >('to-pay');
 
   const mapOrderToSection = (status: Order['status']) => {
+    if (status === 'cancelled') return 'cancelled';
     if (status === 'confirmed') return 'to-pay';
     if (status === 'preparing') return 'to-ship';
     if (status === 'shipped' || status === 'out-for-delivery') return 'to-receive';
     return 'to-rate';
   };
 
-  const sectionLabels: Record<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate', string> = {
+  const sectionLabels: Record<
+    'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled',
+    string
+  > = {
     'to-pay': 'To Pay',
     'to-ship': 'To Ship',
     'to-receive': 'To Receive',
-    'to-rate': 'To Rate'
+    'to-rate': 'To Rate',
+    cancelled: 'Cancelled'
   };
 
   const filteredOrders = orders.filter((order) => mapOrderToSection(order.status) === orderSection);
@@ -39,7 +46,8 @@ export default function Account() {
     'to-pay': orders.filter((order) => mapOrderToSection(order.status) === 'to-pay').length,
     'to-ship': orders.filter((order) => mapOrderToSection(order.status) === 'to-ship').length,
     'to-receive': orders.filter((order) => mapOrderToSection(order.status) === 'to-receive').length,
-    'to-rate': orders.filter((order) => mapOrderToSection(order.status) === 'to-rate').length
+    'to-rate': orders.filter((order) => mapOrderToSection(order.status) === 'to-rate').length,
+    cancelled: orders.filter((order) => mapOrderToSection(order.status) === 'cancelled').length
   };
   const redirectPath = new URLSearchParams(location.search).get('redirect') || '/account';
 
@@ -262,8 +270,12 @@ export default function Account() {
                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <h2 className="text-3xl font-serif mb-8 italic">My Orders.</h2>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-                    {(Object.keys(sectionLabels) as Array<'to-pay' | 'to-ship' | 'to-receive' | 'to-rate'>).map((section) => (
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    {(
+                      Object.keys(sectionLabels) as Array<
+                        'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled'
+                      >
+                    ).map((section) => (
                       <button
                         key={section}
                         onClick={() => setOrderSection(section)}
@@ -293,16 +305,32 @@ export default function Account() {
                          </div>
                        )}
                        {filteredOrders.map((order) => (
-                         <div key={order.id} className="border border-brand-gray p-6 hover:shadow-md transition-shadow">
+                         <Link
+                           key={order.id}
+                           to={`/account/orders/${encodeURIComponent(order.id)}`}
+                           className={cn(
+                             'block border border-brand-gray p-6 transition-all outline-none',
+                             'hover:shadow-md focus-visible:ring-2 focus-visible:ring-brand-charcoal focus-visible:ring-offset-2'
+                           )}
+                         >
                             <div className="flex justify-between items-start mb-6">
                                <div>
-                                  <p className="text-[10px] uppercase font-bold tracking-widest text-brand-gold mb-1">{sectionLabels[mapOrderToSection(order.status)]}</p>
+                                  <p
+                                    className={cn(
+                                      'text-[10px] uppercase font-bold tracking-widest mb-1',
+                                      order.status === 'cancelled' ? 'text-red-500' : 'text-brand-gold'
+                                    )}
+                                  >
+                                    {sectionLabels[mapOrderToSection(order.status)]}
+                                  </p>
                                   <h4 className="font-serif text-xl">{order.id}</h4>
                                   <p className="text-[10px] text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
                                </div>
                                <div className="text-right">
                                   <p className="text-lg font-medium">{formatPrice(order.total)}</p>
-                                  <Link to={`/tracking?id=${order.id}`} className="text-[9px] uppercase font-bold tracking-widest border-b border-brand-black hover:text-brand-gold hover:border-brand-gold transition-colors mt-2 inline-block">Track Prestige</Link>
+                                  <span className="text-[9px] uppercase font-bold tracking-widest border-b border-brand-black mt-2 inline-block">
+                                    View details
+                                  </span>
                                </div>
                             </div>
                             <div className="flex -space-x-2 overflow-hidden">
@@ -320,7 +348,7 @@ export default function Account() {
                                  </div>
                                )}
                             </div>
-                         </div>
+                         </Link>
                        ))}
                     </div>
                   )}

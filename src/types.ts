@@ -21,7 +21,7 @@ export interface Order {
   id: string;
   items: CartItem[];
   total: number;
-  status: 'confirmed' | 'preparing' | 'shipped' | 'out-for-delivery' | 'delivered';
+  status: 'confirmed' | 'preparing' | 'shipped' | 'out-for-delivery' | 'delivered' | 'cancelled';
   customer: {
     fullName: string;
     address: string;

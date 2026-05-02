@@ -9,6 +9,7 @@ interface AppContextType {
   clearCart: () => void;
   orders: Order[];
   createOrder: (customer: any) => Order;
+  cancelOrder: (orderId: string) => boolean;
   refundRequests: RefundRequest[];
   submitRefund: (refund: Omit<RefundRequest, 'id' | 'createdAt' | 'status'>) => void;
   user: any;
@@ -109,6 +110,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newOrder;
   };
 
+  const cancelOrder = (orderId: string): boolean => {
+    let cancelled = false;
+    setOrders((prev) => {
+      const target = prev.find((o) => o.id === orderId);
+      if (
+        !target ||
+        (target.status !== 'confirmed' && target.status !== 'preparing')
+      ) {
+        return prev;
+      }
+      cancelled = true;
+      return prev.map((o) =>
+        o.id === orderId ? { ...o, status: 'cancelled' as const } : o
+      );
+    });
+    return cancelled;
+  };
+
   const submitRefund = (refund: Omit<RefundRequest, 'id' | 'createdAt' | 'status'>) => {
     const newRefund: RefundRequest = {
       ...refund,
@@ -162,7 +181,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <AppContext.Provider value={{
       cart, addToCart, removeFromCart, updateQuantity, clearCart,
-      orders, createOrder,
+      orders, createOrder, cancelOrder,
       refundRequests, submitRefund,
       user, login, register, logout
     }}>
