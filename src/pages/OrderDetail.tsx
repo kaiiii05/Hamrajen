@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, MapPin, CreditCard, Package, Truck } from 'lucide-react';
+import { ArrowLeft, MapPin, CreditCard, Package } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
 import { Order } from '../types';
@@ -97,12 +97,9 @@ export default function OrderDetail() {
             <div className="text-left md:text-right">
               <p className="text-[9px] uppercase font-bold tracking-widest text-gray-400 mb-1">Order total</p>
               <p className="text-2xl font-serif">{formatPrice(order.total)}</p>
-              <Link
-                to={`/tracking?id=${encodeURIComponent(order.id)}`}
-                className="text-[9px] uppercase font-bold tracking-widest border-b border-brand-black hover:text-brand-gold hover:border-brand-gold transition-colors mt-4 inline-block"
-              >
-                Track Prestige
-              </Link>
+              <p className="text-[10px] text-gray-500 mt-4 max-w-xs md:ml-auto leading-relaxed">
+                Fulfillment updates appear here as your order moves through each stage.
+              </p>
             </div>
           </div>
 
@@ -179,12 +176,8 @@ export default function OrderDetail() {
             <Link to="/account" className="text-[10px] uppercase font-bold tracking-widest hover:text-brand-gold">
               My Orders
             </Link>
-            <Link
-              to={`/tracking?id=${encodeURIComponent(order.id)}`}
-              className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-widest text-gray-500 hover:text-brand-black"
-            >
-              <Truck size={14} />
-              Tracking
+            <Link to="/shop" className="text-[10px] uppercase font-bold tracking-widest text-gray-500 hover:text-brand-black">
+              Continue shopping
             </Link>
           </div>
         </motion.div>

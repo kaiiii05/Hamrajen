@@ -191,7 +191,7 @@ export default function Home() {
           </div>
           <h3 className="uppercase text-[10px] font-bold tracking-[2px] mb-4">Real-Time Tracking</h3>
           <p className="text-xs text-gray-400 font-light leading-relaxed">Monitor your curation's journey from our vault to your doorstep.</p>
-           <Link to="/tracking" className="mt-4 text-[9px] uppercase font-bold tracking-widest text-brand-gold border-b border-brand-gold pb-1">Track Now</Link>
+           <Link to="/account" className="mt-4 text-[9px] uppercase font-bold tracking-widest text-brand-gold border-b border-brand-gold pb-1">My Orders</Link>
         </div>
         <div className="flex flex-col items-center text-center">
           <div className="w-12 h-12 bg-brand-beige border border-brand-gray-med flex items-center justify-center mb-6">

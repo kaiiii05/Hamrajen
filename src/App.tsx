@@ -15,7 +15,6 @@ import Checkout from './pages/Checkout';
 import Account from './pages/Account';
 import OrderDetail from './pages/OrderDetail';
 import AdminDashboard from './pages/AdminDashboard';
-import OrderTracking from './pages/OrderTracking';
 import ReturnRefund from './pages/ReturnRefund';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
@@ -37,7 +36,6 @@ export default function App() {
               <Route path="/account" element={<Account />} />
               <Route path="/account/orders/:orderId" element={<OrderDetail />} />
               <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/tracking" element={<OrderTracking />} />
               <Route path="/return-refund" element={<ReturnRefund />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />

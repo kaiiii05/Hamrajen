@@ -23,7 +23,7 @@ export default function Footer() {
         <div>
           <h3 className="uppercase text-[10px] font-bold tracking-[2px] mb-6 text-brand-gold">Service</h3>
           <ul className="space-y-3 text-[11px] text-gray-400 font-normal uppercase tracking-[1px]">
-            <li><Link to="/tracking" className="hover:text-white transition-colors">Track Order</Link></li>
+            <li><Link to="/account" className="hover:text-white transition-colors">My Orders</Link></li>
             <li><Link to="/return-refund" className="hover:text-white transition-colors">Refunds & Returns</Link></li>
             <li><Link to="/admin" className="hover:text-white transition-colors">Admin Portal</Link></li>
           </ul>
