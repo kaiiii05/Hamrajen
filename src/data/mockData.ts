@@ -33,7 +33,32 @@ import cubanCollarCream from '../assets/men-cuban-collar-polo/cream.jpg';
 import cubanCollarPink from '../assets/men-cuban-collar-polo/pink.jpg';
 import cubanCollarWhite from '../assets/men-cuban-collar-polo/white.jpg';
 import cubanCollarYellow from '../assets/men-cuban-collar-polo/yellow.jpg';
+import floralVneckBlue from '../assets/women-floral-vneck-lace-dress/blue.jpg';
+import floralVneckWhite from '../assets/women-floral-vneck-lace-dress/white.jpg';
+import floralVneckYellow from '../assets/women-floral-vneck-lace-dress/yellow.jpg';
+import infinityVelourBlack from '../assets/men-infinity-velour-tee/black.jpg';
+import infinityVelourCream from '../assets/men-infinity-velour-tee/cream.jpg';
+import infinityVelourDarkBlue from '../assets/men-infinity-velour-tee/dark-blue.jpg';
+import infinityVelourGray from '../assets/men-infinity-velour-tee/gray.jpg';
+import infinityVelourMustard from '../assets/men-infinity-velour-tee/mustard.jpg';
+import infinityVelourSkyBlue from '../assets/men-infinity-velour-tee/sky-blue.jpg';
+import knittedVestBlack from '../assets/women-knitted-breasted-vest/black.jpg';
+import knittedVestBrown from '../assets/women-knitted-breasted-vest/brown.jpg';
+import knittedVestCamel from '../assets/women-knitted-breasted-vest/camel.jpg';
+import knittedVestWhite from '../assets/women-knitted-breasted-vest/white.jpg';
+import roundNeckTankBlack from '../assets/women-round-neck-tank/black.jpg';
+import roundNeckTankGray from '../assets/women-round-neck-tank/gray.jpg';
+import roundNeckTankRoseRed from '../assets/women-round-neck-tank/rose-red.jpg';
+import roundNeckTankWhite from '../assets/women-round-neck-tank/white.jpg';
+import stripeKnitBeige from '../assets/women-stripe-knitted-top/beige.jpg';
+import stripeKnitBlack from '../assets/women-stripe-knitted-top/black.jpg';
+import stripeKnitWhite from '../assets/women-stripe-knitted-top/white.jpg';
+import summerDressWhite from '../assets/women-casual-summer-dress/white.jpg';
+import summerDressDetail from '../assets/women-casual-summer-dress/detail.jpg';
+import summerDressDetail1 from '../assets/women-casual-summer-dress/detail-1.jpg';
+import summerDressDetail2 from '../assets/women-casual-summer-dress/detail-2.jpg';
 
+/** All `price` values are Philippine pesos (PHP). */
 export const PRODUCTS: Product[] = [
   {
     id: 'p2',
@@ -258,5 +283,172 @@ export const PRODUCTS: Product[] = [
       'Lightweight breathable fabric',
       'Relaxed casual fit'
     ]
-  }
+  },
+  {
+    id: 'p12',
+    name: 'Floral V-Neck Lace Dress',
+    description:
+      'An airy lace dress with a flattering V-neck and scattered floral motif. Layer-ready for occasions that call for soft romance and movement.',
+    price: 23000,
+    category: 'women',
+    images: [floralVneckBlue, floralVneckWhite, floralVneckYellow],
+    colorImages: {
+      Blue: floralVneckBlue,
+      White: floralVneckWhite,
+      Yellow: floralVneckYellow,
+    },
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Blue', hex: '#6B8C9E' },
+      { name: 'White', hex: '#FAF8F5' },
+      { name: 'Yellow', hex: '#E6D089' },
+    ],
+    details: [
+      'Delicate lace overlay',
+      'V-neckline',
+      'Floral pattern',
+      'Lightweight lined comfort',
+    ],
+  },
+  {
+    id: 'p13',
+    name: 'Infinity Velour T-Shirt for Men',
+    description:
+      'A plush velour tee with a rich handfeel and relaxed drape. Easy polish for off-duty days and evening layers.',
+    price: 7800,
+    category: 'men',
+    images: [
+      infinityVelourBlack,
+      infinityVelourCream,
+      infinityVelourDarkBlue,
+      infinityVelourGray,
+      infinityVelourMustard,
+      infinityVelourSkyBlue,
+    ],
+    colorImages: {
+      Black: infinityVelourBlack,
+      Cream: infinityVelourCream,
+      'Dark Blue': infinityVelourDarkBlue,
+      Gray: infinityVelourGray,
+      Mustard: infinityVelourMustard,
+      'Sky Blue': infinityVelourSkyBlue,
+    },
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Cream', hex: '#EDE6D8' },
+      { name: 'Dark Blue', hex: '#2C3A52' },
+      { name: 'Gray', hex: '#9A9A9A' },
+      { name: 'Mustard', hex: '#C4A035' },
+      { name: 'Sky Blue', hex: '#9EC5DC' },
+    ],
+    details: [
+      'Soft velour finish',
+      'Crew neck short sleeves',
+      'Breathable easy stretch',
+      'Regular relaxed fit',
+    ],
+  },
+  {
+    id: 'p14',
+    name: 'Knitted Breasted Vest for Women',
+    description:
+      'A tailored knit vest with a buttoned front and clean lines. Ideal over blouses or on its own for a modern layered look.',
+    price: 9500,
+    category: 'women',
+    images: [knittedVestBlack, knittedVestBrown, knittedVestCamel, knittedVestWhite],
+    colorImages: {
+      Black: knittedVestBlack,
+      Brown: knittedVestBrown,
+      Camel: knittedVestCamel,
+      White: knittedVestWhite,
+    },
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Brown', hex: '#5C4033' },
+      { name: 'Camel', hex: '#C4A574' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    details: [
+      'Fine-gauge knit',
+      'Breasted button front',
+      'Sleeveless vest silhouette',
+      'Structured yet soft',
+    ],
+  },
+  {
+    id: 'p15',
+    name: 'Round Neck Tank Top for Women',
+    description:
+      'A minimal round-neck tank in a smooth knit—your everyday base layer or solo top for warm weather.',
+    price: 3600,
+    category: 'women',
+    images: [roundNeckTankBlack, roundNeckTankGray, roundNeckTankRoseRed, roundNeckTankWhite],
+    colorImages: {
+      Black: roundNeckTankBlack,
+      Gray: roundNeckTankGray,
+      'Rose Red': roundNeckTankRoseRed,
+      White: roundNeckTankWhite,
+    },
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Gray', hex: '#B0B0B0' },
+      { name: 'Rose Red', hex: '#C75D6B' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    details: [
+      'Classic round neckline',
+      'Sleeveless tank cut',
+      'Soft stretch knit',
+      'Easy layering essential',
+    ],
+  },
+  {
+    id: 'p16',
+    name: 'Stripe Knitted Top for Women',
+    description:
+      'A striped knit top with a refined nautical rhythm. Light structure for workdays and weekends alike.',
+    price: 7200,
+    category: 'women',
+    images: [stripeKnitBeige, stripeKnitBlack, stripeKnitWhite],
+    colorImages: {
+      Beige: stripeKnitBeige,
+      Black: stripeKnitBlack,
+      White: stripeKnitWhite,
+    },
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Beige', hex: '#D9CFC0' },
+      { name: 'Black', hex: '#000000' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    details: [
+      'Stripe knit pattern',
+      'Soft breathable yarn',
+      'Clean casual silhouette',
+      'Easy pairing with denim or skirts',
+    ],
+  },
+  {
+    id: 'p17',
+    name: 'Casual Summer Dress',
+    description:
+      'An easy summer dress in a clean white palette—effortless with sandals or sneakers. Detail shots highlight texture and finishing.',
+    price: 21000,
+    category: 'women',
+    images: [summerDressWhite, summerDressDetail, summerDressDetail1, summerDressDetail2],
+    colorImages: {
+      White: summerDressWhite,
+    },
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [{ name: 'White', hex: '#FFFFFF' }],
+    details: [
+      'Light summer-weight fabric',
+      'Relaxed casual silhouette',
+      'Versatile day-to-evening',
+      'See gallery for construction details',
+    ],
+  },
 ];

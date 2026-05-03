@@ -11,11 +11,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(price: number) {
-  return new Intl.NumberFormat('en-PH', {
+/** @param priceInPhp Amount in Philippine pesos (whole pesos; centavos shown when needed). */
+export function formatPrice(priceInPhp: number) {
+  return new Intl.NumberFormat('fil-PH', {
     style: 'currency',
     currency: 'PHP',
-  }).format(price);
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(priceInPhp);
 }
 
 export function getOrderDisplayTitle(items: CartItem[]): string {

@@ -2,6 +2,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  /** Selling price in Philippine pesos (PHP). */
   price: number;
   category: 'men' | 'women' | 'new-arrivals' | 'best-sellers' | 'sale';
   images: string[];
@@ -20,6 +21,7 @@ export interface CartItem extends Product {
 export interface Order {
   id: string;
   items: CartItem[];
+  /** Order total in Philippine pesos (PHP). */
   total: number;
   status: 'confirmed' | 'preparing' | 'shipped' | 'out-for-delivery' | 'delivered' | 'cancelled';
   customer: {
