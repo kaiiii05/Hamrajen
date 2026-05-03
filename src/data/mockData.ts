@@ -58,7 +58,13 @@ import summerDressDetail from '../assets/women-casual-summer-dress/detail.jpg';
 import summerDressDetail1 from '../assets/women-casual-summer-dress/detail-1.jpg';
 import summerDressDetail2 from '../assets/women-casual-summer-dress/detail-2.jpg';
 
-/** All `price` values are Philippine pesos (PHP). */
+/**
+ * All `price` values are Philippine pesos (PHP).
+ * HARMAJEN folders name each piece with its list price (e.g. `Chinese Collar Polo for Men -$188` → **188** pesos).
+ * If the folder number is USD (e.g. $188) rather than pesos, set `FOLDER_LIST_PRICE_TO_PHP` to your PHP-per-USD rate (e.g. `56`).
+ */
+const FOLDER_LIST_PRICE_TO_PHP = 1;
+
 export const PRODUCTS: Product[] = [
   {
     id: 'p2',
@@ -217,7 +223,7 @@ export const PRODUCTS: Product[] = [
     name: 'Chinese Collar Polo for Men',
     description:
       'A refined short-sleeve polo with a standing Chinese collar and a clean three-button placket. Lightweight fabric for sharp everyday dressing.',
-    price: 10500,
+    price: 188 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'men',
     images: [
       chineseCollarBeige,
@@ -253,7 +259,7 @@ export const PRODUCTS: Product[] = [
     name: 'Cuban Collar Polo Shirt',
     description:
       'A relaxed short-sleeve polo with an open Cuban camp collar and a laid-back vacation silhouette. Easy fabric for warm days and weekend wear.',
-    price: 11200,
+    price: 200 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'men',
     images: [
       cubanCollarBlack,
@@ -289,7 +295,7 @@ export const PRODUCTS: Product[] = [
     name: 'Floral V-Neck Lace Dress',
     description:
       'An airy lace dress with a flattering V-neck and scattered floral motif. Layer-ready for occasions that call for soft romance and movement.',
-    price: 23000,
+    price: 410 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [floralVneckBlue, floralVneckWhite, floralVneckYellow],
     colorImages: {
@@ -315,7 +321,7 @@ export const PRODUCTS: Product[] = [
     name: 'Infinity Velour T-Shirt for Men',
     description:
       'A plush velour tee with a rich handfeel and relaxed drape. Easy polish for off-duty days and evening layers.',
-    price: 7800,
+    price: 140 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'men',
     images: [
       infinityVelourBlack,
@@ -354,7 +360,7 @@ export const PRODUCTS: Product[] = [
     name: 'Knitted Breasted Vest for Women',
     description:
       'A tailored knit vest with a buttoned front and clean lines. Ideal over blouses or on its own for a modern layered look.',
-    price: 9500,
+    price: 170 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [knittedVestBlack, knittedVestBrown, knittedVestCamel, knittedVestWhite],
     colorImages: {
@@ -382,7 +388,7 @@ export const PRODUCTS: Product[] = [
     name: 'Round Neck Tank Top for Women',
     description:
       'A minimal round-neck tank in a smooth knit—your everyday base layer or solo top for warm weather.',
-    price: 3600,
+    price: 64 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [roundNeckTankBlack, roundNeckTankGray, roundNeckTankRoseRed, roundNeckTankWhite],
     colorImages: {
@@ -410,7 +416,7 @@ export const PRODUCTS: Product[] = [
     name: 'Stripe Knitted Top for Women',
     description:
       'A striped knit top with a refined nautical rhythm. Light structure for workdays and weekends alike.',
-    price: 7200,
+    price: 128 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [stripeKnitBeige, stripeKnitBlack, stripeKnitWhite],
     colorImages: {
@@ -436,7 +442,7 @@ export const PRODUCTS: Product[] = [
     name: 'Casual Summer Dress',
     description:
       'An easy summer dress in a clean white palette—effortless with sandals or sneakers. Detail shots highlight texture and finishing.',
-    price: 21000,
+    price: 375 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [summerDressWhite, summerDressDetail, summerDressDetail1, summerDressDetail2],
     colorImages: {
