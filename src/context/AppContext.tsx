@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CartItem, Order, Product, RefundRequest } from '../types';
+import { getOrderTimelineSection } from '../lib/orderTimeline';
 
 interface AppContextType {
   cart: CartItem[];
@@ -114,10 +115,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     let cancelled = false;
     setOrders((prev) => {
       const target = prev.find((o) => o.id === orderId);
-      if (
-        !target ||
-        (target.status !== 'confirmed' && target.status !== 'preparing')
-      ) {
+      if (!target || target.status === 'cancelled') {
+        return prev;
+      }
+      const section = getOrderTimelineSection(target);
+      if (section !== 'to-pay' && section !== 'to-ship') {
         return prev;
       }
       cancelled = true;

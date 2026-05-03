@@ -3,7 +3,12 @@ import { motion } from 'motion/react';
 import { ArrowLeft, MapPin, CreditCard, Package, Truck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn, getOrderDisplayTitle } from '../lib/utils';
-import { Order } from '../types';
+import {
+  EXPECTED_DELIVERY_MAX_DAYS,
+  EXPECTED_DELIVERY_MIN_DAYS,
+  getOrderTimelineSection,
+  useOrderTimelineClock,
+} from '../lib/orderTimeline';
 
 const sectionLabels: Record<
   'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled',
@@ -16,17 +21,7 @@ const sectionLabels: Record<
   cancelled: 'Cancelled',
 };
 
-function mapOrderToSection(status: Order['status']) {
-  if (status === 'cancelled') return 'cancelled' as const;
-  if (status === 'confirmed') return 'to-pay' as const;
-  if (status === 'preparing') return 'to-ship' as const;
-  if (status === 'shipped' || status === 'out-for-delivery') return 'to-receive' as const;
-  return 'to-rate' as const;
-}
-
 const SHIPPING_FEE_PHP = 70;
-const EXPECTED_DELIVERY_MIN_DAYS = 2;
-const EXPECTED_DELIVERY_MAX_DAYS = 3;
 
 function addCalendarDays(iso: string, days: number): Date {
   const d = new Date(iso);
@@ -46,12 +41,17 @@ function formatDeliveryDateRange(from: Date, to: Date): string {
 }
 
 export default function OrderDetail() {
+  useOrderTimelineClock();
   const { orderId } = useParams<{ orderId: string }>();
   const { orders, cancelOrder } = useApp();
   const navigate = useNavigate();
 
   const order = orders.find((o) => o.id === orderId);
-  const canCancel = order && (order.status === 'confirmed' || order.status === 'preparing');
+  const timelineSection = order ? getOrderTimelineSection(order) : null;
+  const canCancel =
+    order &&
+    order.status !== 'cancelled' &&
+    (timelineSection === 'to-pay' || timelineSection === 'to-ship');
 
   const handleCancel = () => {
     if (!order) return;
@@ -81,7 +81,7 @@ export default function OrderDetail() {
     );
   }
 
-  const section = mapOrderToSection(order.status);
+  const section = getOrderTimelineSection(order);
   const deliveryFrom = addCalendarDays(order.createdAt, EXPECTED_DELIVERY_MIN_DAYS);
   const deliveryTo = addCalendarDays(order.createdAt, EXPECTED_DELIVERY_MAX_DAYS);
   const deliveryRangeLabel = formatDeliveryDateRange(deliveryFrom, deliveryTo);
@@ -139,7 +139,7 @@ export default function OrderDetail() {
                   <p className="text-[9px] uppercase font-bold tracking-widest text-gray-400 mb-2">
                     Delivery
                   </p>
-                  {order.status === 'delivered' ? (
+                  {section === 'to-rate' ? (
                     <p className="text-sm text-gray-800 font-medium">Delivered</p>
                   ) : (
                     <>

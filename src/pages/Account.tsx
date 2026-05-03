@@ -3,8 +3,8 @@ import { motion } from 'motion/react';
 import { MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn, getOrderDisplayTitle } from '../lib/utils';
+import { getOrderTimelineSection, useOrderTimelineClock } from '../lib/orderTimeline';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Order } from '../types';
 
 export default function Account() {
   const { user, login, register, logout, orders } = useApp();
@@ -22,13 +22,7 @@ export default function Account() {
     'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled'
   >('to-pay');
 
-  const mapOrderToSection = (status: Order['status']) => {
-    if (status === 'cancelled') return 'cancelled';
-    if (status === 'confirmed') return 'to-pay';
-    if (status === 'preparing') return 'to-ship';
-    if (status === 'shipped' || status === 'out-for-delivery') return 'to-receive';
-    return 'to-rate';
-  };
+  useOrderTimelineClock();
 
   const sectionLabels: Record<
     'to-pay' | 'to-ship' | 'to-receive' | 'to-rate' | 'cancelled',
@@ -41,13 +35,13 @@ export default function Account() {
     cancelled: 'Cancelled'
   };
 
-  const filteredOrders = orders.filter((order) => mapOrderToSection(order.status) === orderSection);
+  const filteredOrders = orders.filter((order) => getOrderTimelineSection(order) === orderSection);
   const orderSectionCounts = {
-    'to-pay': orders.filter((order) => mapOrderToSection(order.status) === 'to-pay').length,
-    'to-ship': orders.filter((order) => mapOrderToSection(order.status) === 'to-ship').length,
-    'to-receive': orders.filter((order) => mapOrderToSection(order.status) === 'to-receive').length,
-    'to-rate': orders.filter((order) => mapOrderToSection(order.status) === 'to-rate').length,
-    cancelled: orders.filter((order) => mapOrderToSection(order.status) === 'cancelled').length
+    'to-pay': orders.filter((order) => getOrderTimelineSection(order) === 'to-pay').length,
+    'to-ship': orders.filter((order) => getOrderTimelineSection(order) === 'to-ship').length,
+    'to-receive': orders.filter((order) => getOrderTimelineSection(order) === 'to-receive').length,
+    'to-rate': orders.filter((order) => getOrderTimelineSection(order) === 'to-rate').length,
+    cancelled: orders.filter((order) => getOrderTimelineSection(order) === 'cancelled').length
   };
   const redirectPath = new URLSearchParams(location.search).get('redirect') || '/account';
 
@@ -321,7 +315,7 @@ export default function Account() {
                                       order.status === 'cancelled' ? 'text-red-500' : 'text-brand-gold'
                                     )}
                                   >
-                                    {sectionLabels[mapOrderToSection(order.status)]}
+                                    {sectionLabels[getOrderTimelineSection(order)]}
                                   </p>
                                   <h4 className="font-serif text-xl break-words">{getOrderDisplayTitle(order.items)}</h4>
                                   <p className="text-[10px] text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
