@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, MapPin, CreditCard, Package } from 'lucide-react';
+import { ArrowLeft, MapPin, CreditCard, Package, Truck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
 import { Order } from '../types';
@@ -22,6 +22,27 @@ function mapOrderToSection(status: Order['status']) {
   if (status === 'preparing') return 'to-ship' as const;
   if (status === 'shipped' || status === 'out-for-delivery') return 'to-receive' as const;
   return 'to-rate' as const;
+}
+
+const SHIPPING_FEE_PHP = 70;
+const EXPECTED_DELIVERY_MIN_DAYS = 2;
+const EXPECTED_DELIVERY_MAX_DAYS = 3;
+
+function addCalendarDays(iso: string, days: number): Date {
+  const d = new Date(iso);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function formatDeliveryDateRange(from: Date, to: Date): string {
+  const sameMonth =
+    from.getMonth() === to.getMonth() && from.getFullYear() === to.getFullYear();
+  if (sameMonth) {
+    const month = from.toLocaleDateString('en-US', { month: 'short' });
+    return `${month} ${from.getDate()}–${to.getDate()}`;
+  }
+  const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+  return `${from.toLocaleDateString('en-US', opts)} – ${to.toLocaleDateString('en-US', opts)}`;
 }
 
 export default function OrderDetail() {
@@ -61,6 +82,9 @@ export default function OrderDetail() {
   }
 
   const section = mapOrderToSection(order.status);
+  const deliveryFrom = addCalendarDays(order.createdAt, EXPECTED_DELIVERY_MIN_DAYS);
+  const deliveryTo = addCalendarDays(order.createdAt, EXPECTED_DELIVERY_MAX_DAYS);
+  const deliveryRangeLabel = formatDeliveryDateRange(deliveryFrom, deliveryTo);
 
   return (
     <div className="bg-brand-beige min-h-screen py-24 px-6 md:px-12">
@@ -104,6 +128,35 @@ export default function OrderDetail() {
           </div>
 
           <div className="p-8 md:p-10 space-y-10">
+            {order.status !== 'cancelled' && (
+              <div className="flex gap-4 p-5 border border-brand-gray bg-brand-beige/60">
+                <div className="p-3 bg-white border border-brand-gray h-fit shrink-0">
+                  <Truck size={22} className="text-brand-gold" strokeWidth={1.5} aria-hidden />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[9px] uppercase font-bold tracking-widest text-gray-400 mb-2">
+                    Delivery
+                  </p>
+                  {order.status === 'delivered' ? (
+                    <p className="text-sm text-gray-800 font-medium">Delivered</p>
+                  ) : (
+                    <>
+                      <p className="text-sm text-gray-800 font-medium">
+                        Expected delivery: 2–3 days
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Estimated arrival by {deliveryRangeLabel}
+                      </p>
+                    </>
+                  )}
+                  <p className="text-sm text-gray-700 mt-3">
+                    Shipping fee:{' '}
+                    <span className="font-medium text-brand-charcoal">{formatPrice(SHIPPING_FEE_PHP)}</span>
+                  </p>
+                </div>
+              </div>
+            )}
+
             <div>
               <h2 className="text-xs uppercase font-bold tracking-widest text-gray-400 mb-4">Items</h2>
               <ul className="divide-y divide-brand-gray border border-brand-gray">
