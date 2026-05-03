@@ -123,17 +123,15 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-sm font-medium mb-2 line-clamp-2">{product.name}</h3>
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">{formatPrice(product.price)}</p>
-                <div className="flex items-center space-x-1">
-                  {product.colors.slice(0, 4).map((color) => (
-                    <span
-                      key={`${product.id}-${color.name}`}
-                      className="w-2.5 h-2.5 rounded-full border border-black/10"
-                      style={{ backgroundColor: color.hex }}
-                    />
-                  ))}
-                </div>
+              <p className="text-sm text-gray-500 mb-2 tabular-nums">{formatPrice(product.price)}</p>
+              <div className="flex items-center space-x-1">
+                {product.colors.slice(0, 4).map((color) => (
+                  <span
+                    key={`${product.id}-${color.name}`}
+                    className="w-2.5 h-2.5 rounded-full border border-black/10"
+                    style={{ backgroundColor: color.hex }}
+                  />
+                ))}
               </div>
             </Link>
           ))}

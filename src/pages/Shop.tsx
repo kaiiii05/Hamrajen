@@ -69,11 +69,11 @@ export default function Shop() {
             </div>
 
             <div className="flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-2">
-                <Link to={`/product/${product.id}`} className="hover:text-brand-gold transition-colors">
-                  <h3 className="text-[13px] font-medium tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">{product.name}</h3>
+              <div className="mb-2 min-w-0">
+                <Link to={`/product/${product.id}`} className="block hover:text-brand-gold transition-colors">
+                  <h3 className="text-[13px] font-medium tracking-tight line-clamp-2 leading-snug">{product.name}</h3>
                 </Link>
-                <span className="text-[12px] font-light text-gray-500">{formatPrice(product.price)}</span>
+                <p className="text-[12px] font-light text-gray-500 mt-2 tabular-nums">{formatPrice(product.price)}</p>
               </div>
               <div className="flex items-center space-x-2 mb-4">
                  {product.colors.slice(0, 3).map(c => (
