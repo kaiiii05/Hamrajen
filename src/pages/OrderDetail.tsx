@@ -1,8 +1,9 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowLeft, MapPin, CreditCard, Package } from 'lucide-react';
+import { ArrowLeft, MapPin, CreditCard, Package, Truck, ChevronRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { formatPrice, cn } from '../lib/utils';
+import { formatDeliveryWindow, resolveOrderShipping } from '../lib/orderShipping';
 import { Order } from '../types';
 
 const sectionLabels: Record<
@@ -61,6 +62,17 @@ export default function OrderDetail() {
   }
 
   const section = mapOrderToSection(order.status);
+  const shipping = resolveOrderShipping(order);
+  const deliveryRange = formatDeliveryWindow(
+    shipping.estimatedDeliveryStart,
+    shipping.estimatedDeliveryEnd
+  );
+  const hasShippingDiscount = shipping.feeFinal < shipping.feeOriginal;
+  const discountOff = shipping.feeOriginal - shipping.feeFinal;
+
+  const scrollToShippingDetails = () => {
+    document.getElementById('shipping-address')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="bg-brand-beige min-h-screen py-24 px-6 md:px-12">
@@ -104,6 +116,39 @@ export default function OrderDetail() {
           </div>
 
           <div className="p-8 md:p-10 space-y-10">
+            {order.status !== 'cancelled' && (
+              <button
+                type="button"
+                onClick={scrollToShippingDetails}
+                className="w-full flex items-center gap-4 px-4 py-4 md:px-5 md:py-4 bg-brand-charcoal text-left text-white rounded-sm border border-brand-charcoal/90 hover:opacity-95 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2"
+              >
+                <Truck size={22} className="shrink-0 text-white/90" strokeWidth={1.5} aria-hidden />
+                <div className="flex-grow min-w-0 space-y-0.5">
+                  <p className="text-sm font-medium text-white">
+                    {order.status === 'delivered' ? 'Delivered' : `Get by ${deliveryRange}`}
+                  </p>
+                  <p className="text-xs text-white/80">
+                    <span className="text-white/60">Shipping fee: </span>
+                    {hasShippingDiscount ? (
+                      <>
+                        <span className="text-white/45 line-through">{formatPrice(shipping.feeOriginal)}</span>
+                        <span className="text-white/60"> </span>
+                        <span className="text-white font-medium">{formatPrice(shipping.feeFinal)}</span>
+                      </>
+                    ) : (
+                      <span className="text-white font-medium">{formatPrice(shipping.feeFinal)}</span>
+                    )}
+                  </p>
+                  {hasShippingDiscount && order.status !== 'delivered' && (
+                    <p className="text-xs text-teal-400 pt-0.5">
+                      {formatPrice(discountOff)} off shipping on orders {formatPrice(shipping.promoThreshold)}+
+                    </p>
+                  )}
+                </div>
+                <ChevronRight size={20} className="shrink-0 text-white/50" aria-hidden />
+              </button>
+            )}
+
             <div>
               <h2 className="text-xs uppercase font-bold tracking-widest text-gray-400 mb-4">Items</h2>
               <ul className="divide-y divide-brand-gray border border-brand-gray">
@@ -127,7 +172,7 @@ export default function OrderDetail() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="flex gap-4">
+              <div id="shipping-address" className="flex gap-4 scroll-mt-24">
                 <div className="p-3 bg-brand-beige border border-brand-gray h-fit">
                   <MapPin size={22} className="text-brand-gold" />
                 </div>

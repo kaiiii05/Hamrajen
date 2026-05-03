@@ -30,6 +30,13 @@ export interface Order {
     paymentMethod: string;
   };
   createdAt: string;
+  shipping?: {
+    estimatedDeliveryStart: string;
+    estimatedDeliveryEnd: string;
+    feeOriginal: number;
+    feeFinal: number;
+    promoThreshold: number;
+  };
 }
 
 export interface RefundRequest {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CartItem, Order, Product, RefundRequest } from '../types';
+import { buildShippingSnapshot } from '../lib/orderShipping';
 
 interface AppContextType {
   cart: CartItem[];
@@ -97,13 +98,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const createOrder = (customer: any) => {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const createdAt = new Date().toISOString();
     const newOrder: Order = {
       id: 'HAR-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
       items: [...cart],
       total,
       status: 'confirmed',
       customer,
-      createdAt: new Date().toISOString(),
+      createdAt,
+      shipping: buildShippingSnapshot(total, createdAt),
     };
     setOrders((prev) => [newOrder, ...prev]);
     clearCart();
