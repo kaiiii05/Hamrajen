@@ -1,28 +1,28 @@
 import { Product } from '../types';
-import womenWhite from '../assets/women/white.png';
-import womenApricot from '../assets/women/apricot.png';
-import womenDarkGreen from '../assets/women/dark-green.png';
-import womenKhaki from '../assets/women/khaki.png';
-import womenBlack from '../assets/women/black.png';
-import womenBrown from '../assets/women/brown.png';
-import womenBlue from '../assets/women/blue.png';
-import peplumMocha from '../assets/women-peplum/mocha.png';
-import peplumTaupeBrown from '../assets/women-peplum/taupe-brown.png';
-import peplumMauve from '../assets/women-peplum/mauve.png';
-import peplumOldrose from '../assets/women-peplum/oldrose.png';
-import peplumAvocadoGreen from '../assets/women-peplum/avocado-green.png';
-import peplumRed from '../assets/women-peplum/red.png';
-import menAshGray from '../assets/men-polo/ash-gray.png';
-import menWhite from '../assets/men-polo/white.png';
-import menSageGreen from '../assets/men-polo/sage-green.png';
-import menBlack from '../assets/men-polo/black.png';
-import menDarkGray from '../assets/men-polo/dark-gray.png';
-import menChocoBrown from '../assets/men-polo/choco-brown.png';
-import menTexturedBlack from '../assets/men-textured-tee/black.png';
-import menTexturedBeige from '../assets/men-textured-tee/beige.png';
-import menTexturedKhaki from '../assets/men-textured-tee/khaki.png';
-import menTexturedGray from '../assets/men-textured-tee/gray.png';
-import menTexturedWhite from '../assets/men-textured-tee/white.png';
+import womenWhite from '../assets/women/white.jpg';
+import womenApricot from '../assets/women/apricot.jpg';
+import womenDarkGreen from '../assets/women/dark-green.jpg';
+import womenKhaki from '../assets/women/khaki.jpg';
+import womenBlack from '../assets/women/black.jpg';
+import womenBrown from '../assets/women/brown.jpg';
+import womenBlue from '../assets/women/blue.jpg';
+import peplumMocha from '../assets/women-peplum/mocha.jpg';
+import peplumTaupeBrown from '../assets/women-peplum/taupe-brown.jpg';
+import peplumMauve from '../assets/women-peplum/mauve.jpg';
+import peplumOldrose from '../assets/women-peplum/oldrose.jpg';
+import peplumAvocadoGreen from '../assets/women-peplum/avocado-green.jpg';
+import peplumRed from '../assets/women-peplum/red.jpg';
+import menAshGray from '../assets/men-polo/ash-gray.jpg';
+import menWhite from '../assets/men-polo/white.jpg';
+import menSageGreen from '../assets/men-polo/sage-green.jpg';
+import menBlack from '../assets/men-polo/black.jpg';
+import menDarkGray from '../assets/men-polo/dark-gray.jpg';
+import menChocoBrown from '../assets/men-polo/choco-brown.jpg';
+import menTexturedBlack from '../assets/men-textured-tee/black.jpg';
+import menTexturedBeige from '../assets/men-textured-tee/beige.jpg';
+import menTexturedKhaki from '../assets/men-textured-tee/khaki.jpg';
+import menTexturedGray from '../assets/men-textured-tee/gray.jpg';
+import menTexturedWhite from '../assets/men-textured-tee/white.jpg';
 import chineseCollarBeige from '../assets/men-chinese-collar-polo/beige.jpg';
 import chineseCollarBlack from '../assets/men-chinese-collar-polo/black.jpg';
 import chineseCollarBrown from '../assets/men-chinese-collar-polo/brown.jpg';
@@ -70,7 +70,7 @@ export const PRODUCTS: Product[] = [
     id: 'p2',
     name: 'Relaxed Camp Collar Blouse',
     description: 'A clean short-sleeve blouse with a relaxed drape and open camp collar. Built for breathable everyday wear with a polished silhouette.',
-    price: 2200,
+    price: 210 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [
       womenWhite,
@@ -111,7 +111,7 @@ export const PRODUCTS: Product[] = [
     id: 'p7',
     name: 'Open-Back Peplum Top',
     description: 'A structured sleeveless peplum top with a flattering waist seam and open-back ribbon detail. Designed to transition from casual daytime to elevated evening looks.',
-    price: 2450,
+    price: 150 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'women',
     images: [
       peplumMocha,
@@ -149,7 +149,7 @@ export const PRODUCTS: Product[] = [
     id: 'p8',
     name: 'Polo T-Shirt Waffle Fabric Comfortable Suit',
     description: 'A textured waffle-knit polo t-shirt with a clean modern cut and breathable comfort for daily wear.',
-    price: 2100,
+    price: 175 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'men',
     images: [
       menAshGray,
@@ -187,7 +187,7 @@ export const PRODUCTS: Product[] = [
     id: 'p9',
     name: 'Premium Textured Casual Short Sleeve T-Shirt For Men',
     description: 'A premium short-sleeve textured tee with a clean silhouette and soft handfeel for elevated everyday wear.',
-    price: 1950,
+    price: 170 * FOLDER_LIST_PRICE_TO_PHP,
     category: 'men',
     images: [
       menTexturedBlack,
