@@ -2,7 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, MapPin, CreditCard, Package, Truck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { formatPrice, cn } from '../lib/utils';
+import { formatPrice, cn, getOrderDisplayTitle } from '../lib/utils';
 import { Order } from '../types';
 
 const sectionLabels: Record<
@@ -113,7 +113,9 @@ export default function OrderDetail() {
               >
                 {sectionLabels[section]}
               </p>
-              <h1 className="text-3xl md:text-4xl font-serif tracking-tight">{order.id}</h1>
+              <h1 className="text-3xl md:text-4xl font-serif tracking-tight break-words">
+                {getOrderDisplayTitle(order.items)}
+              </h1>
               <p className="text-[10px] text-gray-400 mt-2">
                 Placed {new Date(order.createdAt).toLocaleString()}
               </p>

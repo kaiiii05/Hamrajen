@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Heart, LogOut, ChevronRight, Package, User, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { formatPrice, cn } from '../lib/utils';
+import { formatPrice, cn, getOrderDisplayTitle } from '../lib/utils';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Order } from '../types';
 
@@ -323,7 +323,7 @@ export default function Account() {
                                   >
                                     {sectionLabels[mapOrderToSection(order.status)]}
                                   </p>
-                                  <h4 className="font-serif text-xl">{order.id}</h4>
+                                  <h4 className="font-serif text-xl break-words">{getOrderDisplayTitle(order.items)}</h4>
                                   <p className="text-[10px] text-gray-400 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
                                </div>
                                <div className="text-right">
