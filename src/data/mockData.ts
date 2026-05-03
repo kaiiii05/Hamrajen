@@ -23,6 +23,11 @@ import menTexturedBeige from '../assets/men-textured-tee/beige.png';
 import menTexturedKhaki from '../assets/men-textured-tee/khaki.png';
 import menTexturedGray from '../assets/men-textured-tee/gray.png';
 import menTexturedWhite from '../assets/men-textured-tee/white.png';
+import chineseCollarBeige from '../assets/men-chinese-collar-polo/beige.jpg';
+import chineseCollarBlack from '../assets/men-chinese-collar-polo/black.jpg';
+import chineseCollarBrown from '../assets/men-chinese-collar-polo/brown.jpg';
+import chineseCollarNavyBlue from '../assets/men-chinese-collar-polo/navy-blue.jpg';
+import chineseCollarWhite from '../assets/men-chinese-collar-polo/white.jpg';
 
 export const PRODUCTS: Product[] = [
   {
@@ -175,6 +180,42 @@ export const PRODUCTS: Product[] = [
       'Short-sleeve crew neck design',
       'Breathable and lightweight',
       'Comfortable regular fit'
+    ]
+  },
+  {
+    id: 'p10',
+    name: 'Chinese Collar Polo for Men',
+    description:
+      'A refined short-sleeve polo with a standing Chinese collar and a clean three-button placket. Lightweight fabric for sharp everyday dressing.',
+    price: 10500,
+    category: 'men',
+    images: [
+      chineseCollarBeige,
+      chineseCollarBlack,
+      chineseCollarBrown,
+      chineseCollarNavyBlue,
+      chineseCollarWhite
+    ],
+    colorImages: {
+      Beige: chineseCollarBeige,
+      Black: chineseCollarBlack,
+      Brown: chineseCollarBrown,
+      'Navy Blue': chineseCollarNavyBlue,
+      White: chineseCollarWhite
+    },
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Beige', hex: '#D4C4B0' },
+      { name: 'Black', hex: '#000000' },
+      { name: 'Brown', hex: '#6B4E3D' },
+      { name: 'Navy Blue', hex: '#1E2A44' },
+      { name: 'White', hex: '#FFFFFF' }
+    ],
+    details: [
+      'Distinctive Chinese / mandarin collar',
+      'Three-button front placket',
+      'Soft breathable knit',
+      'Tailored casual fit'
     ]
   }
 ];
