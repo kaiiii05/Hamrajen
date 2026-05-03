@@ -50,7 +50,7 @@ export default function Home() {
             transition={{ duration: 1.5 }}
             src={heroProduct?.images[0]}
             alt={heroProduct?.name || 'Featured Product'}
-            className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105"
+            className="w-full h-full object-contain opacity-90 transition-transform duration-1000 group-hover:scale-105"
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -74,7 +74,7 @@ export default function Home() {
                <img
                 src={col.image}
                 alt={col.title}
-                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                />
                <div className="absolute top-4 left-4 bg-brand-gold text-white text-[8px] px-2 py-1 tracking-[1px] uppercase">
                  Highlight
@@ -115,11 +115,11 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProducts.map((product) => (
             <Link key={product.id} to={`/product/${product.id}`} className="group border border-brand-gray-light bg-brand-beige/30 p-4">
-              <div className="aspect-[3/4] overflow-hidden bg-white mb-4">
+              <div className="aspect-[3/4] overflow-hidden bg-white mb-4 flex items-center justify-center">
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <h3 className="text-sm font-medium mb-2 line-clamp-2">{product.name}</h3>

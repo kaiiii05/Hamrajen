@@ -63,16 +63,16 @@ export default function ProductDetail() {
                 key={idx}
                 onClick={() => setActiveImage(idx)}
                 className={cn(
-                  "w-20 aspect-[3/4] border-2 transition-all overflow-hidden",
+                  "w-20 aspect-[3/4] border-2 transition-all overflow-hidden bg-[#F5F5F5]",
                   activeImage === idx ? "border-brand-black" : "border-transparent opacity-60"
                 )}
               >
-                <img src={img} alt="" className="w-full h-full object-cover" />
+                <img src={img} alt="" className="w-full h-full object-contain" />
               </button>
             ))}
           </div>
 
-          <div className="lg:col-span-6 relative aspect-[3/4] overflow-hidden bg-brand-gray order-1 lg:order-2">
+          <div className="lg:col-span-6 relative aspect-[3/4] overflow-hidden bg-[#F5F5F5] order-1 lg:order-2">
              <AnimatePresence mode="wait">
               <motion.img
                 key={activeImage}
@@ -81,7 +81,7 @@ export default function ProductDetail() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 alt={product.name}
               />
              </AnimatePresence>

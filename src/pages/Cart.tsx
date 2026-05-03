@@ -46,8 +46,8 @@ export default function Cart() {
                   animate={{ opacity: 1 }}
                   className="flex py-10 border-b border-brand-gray group"
                 >
-                  <div className="w-32 aspect-[3/4] bg-brand-gray overflow-hidden">
-                    <img src={item.images[0]} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="w-32 aspect-[3/4] bg-[#F9F9F9] overflow-hidden flex items-center justify-center">
+                    <img src={item.images[0]} alt={item.name} className="w-full h-full object-contain" />
                   </div>
 
                   <div className="flex-grow ml-8 flex flex-col">

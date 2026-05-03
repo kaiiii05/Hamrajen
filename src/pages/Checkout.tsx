@@ -209,8 +209,8 @@ export default function Checkout() {
                <div className="space-y-6 mb-10 max-h-[300px] overflow-y-auto pr-4 scrollbar-hide">
                  {cart.map((item) => (
                    <div key={`${item.id}-${item.selectedSize}`} className="flex items-center space-x-4">
-                      <div className="w-16 h-20 bg-gray-100 overflow-hidden shrink-0">
-                        <img src={item.images[0]} alt="" className="w-full h-full object-cover" />
+                      <div className="w-16 h-20 bg-[#F9F9F9] overflow-hidden shrink-0 flex items-center justify-center">
+                        <img src={item.images[0]} alt="" className="w-full h-full object-contain" />
                       </div>
                       <div className="flex-grow">
                         <p className="text-xs font-serif italic mb-1">{item.name}</p>

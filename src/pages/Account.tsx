@@ -329,12 +329,16 @@ export default function Account() {
                             </div>
                             <div className="flex -space-x-2 overflow-hidden">
                                {order.items.slice(0, 4).map((item, idx) => (
-                                 <img
-                                  key={idx}
-                                  src={item.images[0]}
-                                  className="w-10 h-14 object-cover border-2 border-white"
-                                  alt=""
-                                 />
+                                 <div
+                                   key={idx}
+                                   className="w-10 h-14 border-2 border-white bg-[#F9F9F9] flex items-center justify-center overflow-hidden shrink-0"
+                                 >
+                                   <img
+                                     src={item.images[0]}
+                                     className="max-w-full max-h-full object-contain"
+                                     alt=""
+                                   />
+                                 </div>
                                ))}
                                {order.items.length > 4 && (
                                  <div className="w-10 h-14 bg-gray-100 border-2 border-white flex items-center justify-center text-[10px] font-bold">

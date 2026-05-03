@@ -56,7 +56,7 @@ export default function Shop() {
                 <img
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"
+                  className="w-full h-full object-contain opacity-90 transition-transform duration-1000 group-hover:scale-110"
                 />
               </Link>
               

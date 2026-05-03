@@ -164,11 +164,13 @@ export default function OrderDetail() {
               <ul className="divide-y divide-brand-gray border border-brand-gray">
                 {order.items.map((item, idx) => (
                   <li key={`${item.id}-${item.selectedSize}-${item.selectedColor}-${idx}`} className="flex gap-4 p-4">
-                    <img
-                      src={item.images[0]}
-                      alt=""
-                      className="w-16 h-20 object-cover border border-brand-gray shrink-0"
-                    />
+                    <div className="w-16 h-20 shrink-0 border border-brand-gray bg-[#F9F9F9] flex items-center justify-center overflow-hidden">
+                      <img
+                        src={item.images[0]}
+                        alt=""
+                        className="max-w-full max-h-full w-auto h-auto object-contain"
+                      />
+                    </div>
                     <div className="flex-grow min-w-0">
                       <p className="font-serif text-lg leading-tight">{item.name}</p>
                       <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">

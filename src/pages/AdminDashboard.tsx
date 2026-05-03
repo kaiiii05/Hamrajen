@@ -144,7 +144,9 @@ export default function AdminDashboard() {
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {PRODUCTS.map(p => (
                       <div key={p.id} className="border border-brand-gray p-4 flex space-x-4 items-center">
-                         <img src={p.images[0]} className="w-12 h-16 object-cover" alt="" />
+                         <div className="w-12 h-16 bg-[#F9F9F9] flex items-center justify-center overflow-hidden shrink-0 border border-brand-gray">
+                           <img src={p.images[0]} className="max-w-full max-h-full object-contain" alt="" />
+                         </div>
                          <div className="flex-grow">
                             <p className="font-serif italic">{p.name}</p>
                             <p className="text-[9px] text-gray-400 uppercase tracking-widest">{p.category} • {formatPrice(p.price)}</p>
