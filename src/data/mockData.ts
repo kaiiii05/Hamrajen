@@ -28,6 +28,11 @@ import chineseCollarBlack from '../assets/men-chinese-collar-polo/black.jpg';
 import chineseCollarBrown from '../assets/men-chinese-collar-polo/brown.jpg';
 import chineseCollarNavyBlue from '../assets/men-chinese-collar-polo/navy-blue.jpg';
 import chineseCollarWhite from '../assets/men-chinese-collar-polo/white.jpg';
+import cubanCollarBlack from '../assets/men-cuban-collar-polo/black.jpg';
+import cubanCollarCream from '../assets/men-cuban-collar-polo/cream.jpg';
+import cubanCollarPink from '../assets/men-cuban-collar-polo/pink.jpg';
+import cubanCollarWhite from '../assets/men-cuban-collar-polo/white.jpg';
+import cubanCollarYellow from '../assets/men-cuban-collar-polo/yellow.jpg';
 
 export const PRODUCTS: Product[] = [
   {
@@ -216,6 +221,42 @@ export const PRODUCTS: Product[] = [
       'Three-button front placket',
       'Soft breathable knit',
       'Tailored casual fit'
+    ]
+  },
+  {
+    id: 'p11',
+    name: 'Cuban Collar Polo Shirt',
+    description:
+      'A relaxed short-sleeve polo with an open Cuban camp collar and a laid-back vacation silhouette. Easy fabric for warm days and weekend wear.',
+    price: 11200,
+    category: 'men',
+    images: [
+      cubanCollarBlack,
+      cubanCollarCream,
+      cubanCollarPink,
+      cubanCollarWhite,
+      cubanCollarYellow
+    ],
+    colorImages: {
+      Black: cubanCollarBlack,
+      Cream: cubanCollarCream,
+      Pink: cubanCollarPink,
+      White: cubanCollarWhite,
+      Yellow: cubanCollarYellow
+    },
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Cream', hex: '#F2EBDD' },
+      { name: 'Pink', hex: '#E8B4B8' },
+      { name: 'White', hex: '#FFFFFF' },
+      { name: 'Yellow', hex: '#E8C96A' }
+    ],
+    details: [
+      'Classic Cuban / camp collar',
+      'Short-sleeve polo construction',
+      'Lightweight breathable fabric',
+      'Relaxed casual fit'
     ]
   }
 ];
